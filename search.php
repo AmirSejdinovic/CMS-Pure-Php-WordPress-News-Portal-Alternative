@@ -17,18 +17,44 @@
     <div class="col-md-8">
 
 
+
+
+
+
      <?php
-     //Izaberi sve iz post tabele
-     $query = "SELECT * FROM posts";
-      //uspostava konekcije sa bazom i prosljeđivanje queriya
-     $select_all_posts = mysqli_query($connection, $query);
+
+
+//if statement koja sprječva grešku zbog ne definisane varijable 
+//ova greška se često javlja u kontakt formama
+//zbog toga provjeravamo da li je kliknuto na submit dugme i tek nakont toga formiramo varajblu iz globalne varijable post
+if(isset($_POST['submit'])){
+
+    $serach = $_POST['search'];//pretvaranje inputa u varijablu
+
+$query = "SELECT * FROM posts WHERE post_tags LIKE '%$serach%' ";//query za traženje unosa inputa kroz bazu podataka  
+
+$search_query = mysqli_query($connection, $query);//uspsotava konekcije i prosljeđivanje querya
+
+if(!$search_query){
+  die("Query failed" . mysqli_error($connection));
+}//funkcija za provjeru kokencije za db
+
+$count = mysqli_num_rows($search_query);//broji redove u bazi koji se podudaraju sa inputpm pretrage
+if($count == 0){
+    echo "<h1>No result</h1>";//ako je 0 redova u bazi onda prikazi ovaj rezultat
+}else{
+
+   
+
+
+    
 
 
      //whille loop koja prolazi kroz bazu i čupa sve što se u njoj nalazi po zadanim putanjama dakle preka principu array 
 
      //mysqli_fetch_assoc je funkcija koja nam daje asocijativnu array dakle sa ključevima po nazivima polja iz tabele koju smo gore selektovali
 
-     while($row = mysqli_fetch_assoc($select_all_posts)){
+     while($row = mysqli_fetch_assoc($search_query)){
 
          $post_title = $row['post_title'];//čupanje post_title rowa
          $post_author = $row['post_author'];//čupanje post_author rowa iz tablee
@@ -69,7 +95,19 @@
 //nastavak whille loop
 
      }//kraj whille loop
-   ?>
+   
+
+
+}
+}
+
+?>
+  
+    
+
+
+
+
 
    </div>
 <?php include 'includes/sidebar.php' ?>

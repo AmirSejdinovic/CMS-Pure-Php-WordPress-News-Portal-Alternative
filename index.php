@@ -1,5 +1,9 @@
 <?php
+
+   //Inkluzija modula header iz foldera includes 
    include 'includes/header.php';
+   //Inkluzija konekcije sa fajlom koji hendla bazu podataka
+   include 'includes/db.php';
 ?>
 
 <?php include 'includes/nav.php';?>

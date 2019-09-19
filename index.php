@@ -33,11 +33,6 @@
 
 <hr>
 
-<h3>Amir</h3>
-
-
-
-
 </div>
 
            <?php include 'includes/sidebar.php' ?>

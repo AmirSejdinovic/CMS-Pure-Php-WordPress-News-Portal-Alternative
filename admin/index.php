@@ -5,9 +5,6 @@
     <div id="wrapper">
 
 <?php include 'includes/nav.php'; ?>
-
-
-
         <div id="page-wrapper">
 
             <div class="container-fluid">

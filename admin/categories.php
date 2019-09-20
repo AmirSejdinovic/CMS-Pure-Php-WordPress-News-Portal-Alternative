@@ -74,24 +74,23 @@
 
                        <div class="col-xs-6">
 
-                      <?php
-                      //query za čupanje kategorija iz db
-                       $query = "SELECT * FROM categories";
-                       
-                       $select_categories_admin = mysqli_query($connection, $query);
-
-                         ?>
+                      
 
                        <table class="table table-bordered table-hover">
                          <thead>
                            <tr>
                              <th>Id</th>
                              <th>Category Title</th>
+
                            </tr>
                          </thead>
                          <tbody>
 
                          <?php
+                           //query za čupanje kategorija iz db
+                          $query = "SELECT * FROM categories";
+                       
+                          $select_categories_admin = mysqli_query($connection, $query);
 
                          //while loop za prikaz kategorija iz db
                          while($row = mysqli_fetch_assoc($select_categories_admin)){
@@ -102,16 +101,37 @@
                           <tr>
                           <td><?php echo $cat_id ?></td>
                           <td><?php echo $cat_title ?></td>
-                          
+                        <!--pravi link za geter kojim ćemo uhfatiti parametar "delete" i prosljediti mu id od kategorije iz baze-->
+                          <td><a href="categories.php?delete=<?php echo $cat_id; ?>">Delete</a></td>
                          </tr>
 
 
                         <?php
 
                          }
-
-                        
                          
+                         ?>
+
+                         <?php
+
+                          //Provjeravamo da li je poslan get request sa parametrom "delete"
+                           if(isset($_GET['delete'])){
+                              
+
+                            //ako je poslan get sa gornjim parametrom onda čuvamo cat_id od tog parametra tj od id kategorije iz baze
+                              $delete_cat_id = $_GET['delete'];
+
+                              //nakon toga pravimo query sa zadatkom da izbriše kategoriju sa tim id iz baze podataka 
+                           $query = "DELETE FROM categories WHERE cat_id = {$delete_cat_id} ";
+                            //šaljemo query u bazu
+                           $delete_query_send = mysqli_query($connection, $query);
+
+                           //refrešujemo stranicu kako bi odmah na front pageu se vidjele promjene bez da user manuelno refrešuje
+                           header("Location: categories.php");
+
+
+
+                           }
                          ?>
                          
                        

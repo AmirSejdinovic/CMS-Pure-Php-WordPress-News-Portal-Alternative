@@ -29,14 +29,14 @@
                            
                            $cat_title = $_POST['cat_title'];
                              //validacija forme
-                           if($cat_title = "" || empty($cat_title)){
+                           if($cat_title == "" || empty($cat_title)){
 
                             echo "This field shoudl not be empty";
 
                            }else{
                                //query za insert unosa u bazu podataka
                             $query = "INSERT INTO categories(cat_title) ";
-                            $query .= "VALUE('{$_POST['cat_title']}') ";
+                            $query .= "VALUE('{$cat_title}') ";
 
                           
                             //prosljeđivanje queryija u bazu
@@ -70,6 +70,17 @@
                          </div>
                         
                         </form>
+
+                       <?php
+                       if(isset($_GET['edit'])){
+                         $cat_id = $_GET['edit'];
+
+                         include "includes/update_categories.php";
+
+                       }
+      
+                        ?>
+
                         </div>
 
                        <div class="col-xs-6">
@@ -103,6 +114,9 @@
                           <td><?php echo $cat_title ?></td>
                         <!--pravi link za geter kojim ćemo uhfatiti parametar "delete" i prosljediti mu id od kategorije iz baze-->
                           <td><a href="categories.php?delete=<?php echo $cat_id; ?>">Delete</a></td>
+
+                          <!--pravi link za geter kojim ćemo uhfatiti parametar "edit" i prosljediti mu id od kategorije-->
+                          <td><a href="categories.php?edit=<?php echo $cat_id; ?>">Edit</a></td>
                          </tr>
 
 

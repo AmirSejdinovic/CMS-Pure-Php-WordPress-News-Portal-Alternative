@@ -1,4 +1,15 @@
 <?php
+
+function comfirm($result){
+//Provjera konekcije funkcija
+global $connection;
+  if(!$result){
+    die("QUERY FAILED" . mysqli_error($connection));
+  }
+
+  
+}
+
 function insert_categories(){
    //uspostava globalne konekcije kako bi sve radilo kako treba
   global $connection;
@@ -56,5 +67,6 @@ function deleteCategories(){
 
    }
 }
+
 
 ?>

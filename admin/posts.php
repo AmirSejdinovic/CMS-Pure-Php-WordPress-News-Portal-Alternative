@@ -39,8 +39,10 @@
                       include 'includes/add_post.php';
                       break;
 
-                      case '34';
-                      echo "Nice1";
+                      //ako je parametar get keya (?source=edit_post) edit post onda uključi fajl edit_post.php iz direktorija includes unutar admin foldera
+
+                      case 'edit_post';
+                      include 'includes/edit_post.php';
                       break;
 
 

@@ -50,12 +50,15 @@
                              echo "<td>{$post_tags}</td>";
                              echo "<td>{$post_comment_count}</td>";
                              echo "<td>{$post_date }</td>";
+                             echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
                            echo "</tr>";
                            
                           }
 
 
                           ?>
+
+
                           <td>1</td>
                           <td>Amir</td>
                           <td>Super</td>
@@ -68,3 +71,21 @@
                         </tr>
                       </tbody>
                       </table>
+
+
+                      <?php
+                         //ako je postavjen get delte onda uradi ovo
+                       if(isset($_GET['delete'])){
+                         //sačuvaj vrijednost ključa delete u varijabli
+                          $the_post_id = $_GET['delete'];
+
+                          //query za brisanje posta
+                       $query ="DELETE FROM posts WHERE post_id = {$the_post_id}";
+                       //šaljemo query u bazu
+                       $delte_query_post = mysqli_query($connection, $query);
+
+                       //provjera konekcije
+                       comfirm($delte_query_post);
+
+                       }
+                       ?>

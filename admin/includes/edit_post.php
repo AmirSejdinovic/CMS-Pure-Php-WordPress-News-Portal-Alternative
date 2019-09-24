@@ -58,7 +58,7 @@ if(isset($_GET['p_id'])){
 
         $query ="UPDATE posts SET ";
         $query .="post_title = '{$update_post_title}', ";
-        $query .="post_category_id = '{$update_cat_id}', ";
+        $query .="post_category_id = {$update_cat_id}, ";
         $query .="post_date = now(), ";
         $query .="post_author = '{$update_post_author}', ";
         $query .="post_status = '{$update_post_status}', ";
@@ -66,7 +66,9 @@ if(isset($_GET['p_id'])){
         $query .="post_content = '{$update_post_content}', ";
         $query .="post_image = '{$update_image}' ";
         $query .="WHERE post_id = {$post_id_current} ";
+       
 
+        
 
         $update_post_query = mysqli_query($connection, $query);
 

@@ -36,7 +36,7 @@
          $post_author = $row['post_author'];//čupanje post_author rowa iz tablee
          $post_date = $row['post_date'];//čupanje post_date rowa iz tabele
          $post_image = $row['post_image'];//čupanje post_image rowa iz tabele
-         $post_content = $row['post_content'];//čupanje post_contene rowa iz rabele
+         $post_content = substr($row['post_content'],0,150);//čupanje post_contene rowa iz rabele, pravljenje putem fije substr excerpta od 0 do 150 karaktera
 
          //prekid while loop
 

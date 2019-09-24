@@ -41,7 +41,9 @@
               while($row = mysqli_fetch_assoc($select_caegories_widget)){
 
                 $cat_title = $row['cat_title'];
-                 echo "<l><a href='#'>{$cat_title}</li>";
+                $cat_id = $row['cat_id'];
+                
+                 echo "<l><a href='category.php?category=$cat_id'>{$cat_title}</li>";
 
               }
             

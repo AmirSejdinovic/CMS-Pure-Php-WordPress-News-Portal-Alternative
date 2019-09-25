@@ -111,7 +111,7 @@
 
                         $unapprove_com_id = $_GET['unapprove'];
                          
-                        $query ="UPDATE comments SET comment_status = 'unapprove' WHERE comment_id = $unapprove_com_id ";
+                        $query ="UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = $unapprove_com_id ";
 
                         $unaprove_query_send = mysqli_query($connection, $query);
 
@@ -124,7 +124,7 @@
                        if(isset($_GET['approve'])){
                            $approve_com_id = $_GET['approve'];
 
-                           $query ="UPDATE comments SET comment_status = 'approve' WHERE comment_id = $approve_com_id  ";
+                           $query ="UPDATE comments SET comment_status = 'approved' WHERE comment_id = $approve_com_id  ";
                            $query_approve_send = mysqli_query($connection,$query);
 
                            comfirm($query_approve_send);

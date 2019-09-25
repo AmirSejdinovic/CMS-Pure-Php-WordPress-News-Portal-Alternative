@@ -69,8 +69,8 @@
 
 
                              echo "<td>{$comment_date}</td>";
-                             echo "<td><a href='posts.php?source=edit_post&p_id={$comment_id}'>Approve</a></td>";
-                             echo "<td><a href='posts.php?delete={$comment_id}'>Unapprove</a></td>";
+                             echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
+                             echo "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
 
                              
                              echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
@@ -105,4 +105,32 @@
                        header("Location: comments.php");
 
                        }
+
+                       //ako je get postavljen key unapprove u bazu podataka u polje comment status ubaci unapprove
+                       if(isset($_GET['unapprove'])){
+
+                        $unapprove_com_id = $_GET['unapprove'];
+                         
+                        $query ="UPDATE comments SET comment_status = 'unapprove' WHERE comment_id = $unapprove_com_id ";
+
+                        $unaprove_query_send = mysqli_query($connection, $query);
+
+                        comfirm($unaprove_query_send);
+
+                        header("Location: comments.php");
+
+                       }
+                       //ako je get postavlje key na approve u bazu podataka u polje comment statsu ubaci approve
+                       if(isset($_GET['approve'])){
+                           $approve_com_id = $_GET['approve'];
+
+                           $query ="UPDATE comments SET comment_status = 'approve' WHERE comment_id = $approve_com_id  ";
+                           $query_approve_send = mysqli_query($connection,$query);
+
+                           comfirm($query_approve_send);
+
+                           header("Location: comments.php");
+                       }
+
+
                        ?>

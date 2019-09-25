@@ -46,7 +46,28 @@
                              echo "<td>{$comment_content}</td>";
                              echo "<td>{$comment_email}</td>";
                              echo "<td>{$comment_status}</td>";
-                             echo "<td>Some title</td>";
+                             
+
+                             //Na osnovu id posta kojeg smo dobili kroz super globalnu varijablu get unutar post.php formiramo u bazi taj unos i onda na osnovu tog unosa imamo id posta u coment_post_id i onda na osnovu tog id biramo tačno post na kome je izvršen komentar putem query WHERE post_id = $comment_post_id
+                             $query ="SELECT * FROM posts WHERE post_id = $comment_post_id ";
+                             //slanje querya
+                             $select_post_title_by_id = mysqli_query($connection, $query);
+
+                              //testiranje konekcije i querya
+                             comfirm($select_post_title_by_id);
+
+                             //while loop koja prolazi kroz sve postove i čupa nazive postova prema id na kome su izvršeni komentari
+                             while($row = mysqli_fetch_assoc($select_post_title_by_id)){
+                               //pohranjujemo post id i post title u varijable
+                               $post_id = $row['post_id'];
+                               $post_title = $row['post_title'];
+                                //prikaz sadržaja varijabli tj naslova posta i id posta te uspostava linka putem kojeg idemo na taj post
+                               echo "<td><a href='../post.php?p_id=$post_id'>{$post_title}</a></td>";
+                             }
+
+                            
+
+
                              echo "<td>{$comment_date}</td>";
                              echo "<td><a href='posts.php?source=edit_post&p_id={$comment_id}'>Approve</a></td>";
                              echo "<td><a href='posts.php?delete={$comment_id}'>Unapprove</a></td>";

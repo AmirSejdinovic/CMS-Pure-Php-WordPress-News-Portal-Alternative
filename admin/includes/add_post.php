@@ -14,14 +14,14 @@
      $post_tags = $_POST['post_tags'];
      $post_contnet = $_POST['post_content'];
      $post_date = date('d-m-y');
-     //$post_comment_count = 4;
+     $post_comment_count = 0;
 
      //php funckija koja premjesta sliku iz temp fajl u lokaciju koju mi želimo to je ovdje folder images u root direktoriju
      move_uploaded_file($post_image_temp, "../images/$post_image");
 
      //Query za dodavanje posta u bazu podataka
      $query ="INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
-     $query .= "VALUES ({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}' , '{$post_contnet}', '{$post_date}', '{$post_status}')";
+     $query .= "VALUES ({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}' , '{$post_contnet}', '{$post_date}', {$post_comment_count}, '{$post_status}')";
 
      //Prosljeđivanje querya sa konekcijom
      $add_post_query_send = mysqli_query($connection, $query);

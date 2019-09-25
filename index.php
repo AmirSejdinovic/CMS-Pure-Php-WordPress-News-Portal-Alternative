@@ -19,7 +19,7 @@
 
      <?php
      //Izaberi sve iz post tabele
-     $query = "SELECT * FROM posts";
+     $query = "SELECT * FROM posts ";
       //uspostava konekcije sa bazom i prosljeđivanje queriya
      $select_all_posts = mysqli_query($connection, $query);
 
@@ -37,7 +37,18 @@
          $post_date = $row['post_date'];//čupanje post_date rowa iz tabele
          $post_image = $row['post_image'];//čupanje post_image rowa iz tabele
          $post_content = substr($row['post_content'],0,150);//čupanje post_contene rowa iz rabele, pravljenje putem fije substr excerpta od 0 do 150 karaktera
+          $post_status = $row['post_status'];
 
+          if($post_status !== 'published'){
+             echo "<h1 class='text-center'>No post here sorry</h1>";
+
+          }else{
+
+
+
+
+
+          
          //prekid while loop
 
          ?>
@@ -70,7 +81,7 @@
 
 
 <?php
-
+          }
 //nastavak whille loop
 
      }//kraj whille loop

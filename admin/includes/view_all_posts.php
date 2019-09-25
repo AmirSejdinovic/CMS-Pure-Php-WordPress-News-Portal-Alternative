@@ -10,6 +10,8 @@
                             <th>Tags</th>
                             <th>Comments</th>
                             <th>Date</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -94,6 +96,8 @@
 
                        //provjera konekcije
                        comfirm($delte_query_post);
+
+                       header("Location: posts.php");
 
                        }
                        ?>

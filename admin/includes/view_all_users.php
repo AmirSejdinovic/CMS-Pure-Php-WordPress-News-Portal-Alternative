@@ -50,8 +50,8 @@
 
 
                              
-                             echo "<td><a href='comments.php?approve={}'>Approve</a></td>";
-                             echo "<td><a href='comments.php?unapprove={}'>Unapprove</a></td>";
+                             echo "<td><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
+                             echo "<td><a href='users.php?change_to_subscriber={$user_id}'>Subscriber</a></td>";
 
                              
                              echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
@@ -88,29 +88,29 @@
                        }
 
                        //ako je get postavljen key unapprove u bazu podataka u polje comment status ubaci unapprove
-                       if(isset($_GET['unapprove'])){
+                       if(isset($_GET['change_to_admin'])){
 
-                        $unapprove_com_id = $_GET['unapprove'];
+                        $the_user_id = $_GET['change_to_admin'];
                          
-                        $query ="UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = $unapprove_com_id ";
+                        $query ="UPDATE users SET user_role = 'admin' WHERE user_id = $the_user_id ";
 
-                        $unaprove_query_send = mysqli_query($connection, $query);
+                        $change_admin_query = mysqli_query($connection, $query);
 
-                        comfirm($unaprove_query_send);
+                        comfirm($change_admin_query);
 
-                        header("Location: comments.php");
+                        header("Location: users.php");
 
                        }
                        //ako je get postavlje key na approve u bazu podataka u polje comment statsu ubaci approve
-                       if(isset($_GET['approve'])){
-                           $approve_com_id = $_GET['approve'];
+                       if(isset($_GET['change_to_subscriber'])){
+                           $the_user_id = $_GET['change_to_subscriber'];
 
-                           $query ="UPDATE comments SET comment_status = 'approved' WHERE comment_id = $approve_com_id  ";
-                           $query_approve_send = mysqli_query($connection,$query);
+                           $query ="UPDATE users SET user_role = 'subscriber' WHERE user_id = $the_user_id  ";
+                           $change_subscriber_query = mysqli_query($connection,$query);
 
-                           comfirm($query_approve_send);
+                           comfirm($change_subscriber_query);
 
-                           header("Location: comments.php");
+                           header("Location: users.php");
                        }
 
 

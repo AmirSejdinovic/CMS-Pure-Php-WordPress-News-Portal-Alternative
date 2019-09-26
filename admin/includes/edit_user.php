@@ -91,6 +91,36 @@ if(isset($_GET['p_id'])){
  <input value="<?php echo $post_title; ?>" type="text" class="form-control" name="post_title">
 </div>
 
+
+
+<div class="form-group">
+  <select name="user_role" id="">
+   <?php
+   
+   $query = "SELECT * FROM users";
+   $select_user_role = mysqli_query($connection, $query);
+
+   //comfirm($select_categories_by_id);
+
+   while($row = mysqli_fetch_assoc($select_user_role)){
+         $user_id = $row['user_id'];
+         $user_role = $row['user_role'];
+       
+
+         echo "<option value='{$user_id}'>$user_role</option>";
+
+
+   }
+   
+   ?>
+  
+  
+  </select>
+
+  <!--<label for="post_category">Post Category Id</label>
+  <input type="text" class="form-control" name="post_category_id">-->
+</div>
+
 <div class="form-group">
   <select name="post_category_id" id="post_category">
    <?php

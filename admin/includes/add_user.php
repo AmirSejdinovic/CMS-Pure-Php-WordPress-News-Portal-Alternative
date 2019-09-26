@@ -1,33 +1,37 @@
 <?php
-  if(isset($_POST['create_post'])){
+  if(isset($_POST['create_users'])){
 
-     $post_title = $_POST['title'];
-     $post_author = $_POST['author'];
-     $post_category_id = $_POST['post_category_id'];
+           
+     $user_firstname = $_POST['user_firstname'];
+     $user_lastname = $_POST['user_lastname'];
+     $user_role = $_POST['user_role'];
 
-     $post_status = $_POST['post_status'];
-     //hvata ime slike i ime
-     $post_image = $_FILES['image']['name'];
+     $username = $_POST['username'];
+
+     
+     //$post_image = $_FILES['image']['name'];
      //postavlja sliku u tmp fajl
-     $post_image_temp = $_FILES['image']['tmp_name'];
+     //$post_image_temp = $_FILES['image']['tmp_name'];
 
-     $post_tags = $_POST['post_tags'];
-     $post_contnet = $_POST['post_content'];
-     $post_date = date('d-m-y');
-     $post_comment_count = 0;
+     $user_email = $_POST['user_email'];
+     $user_password = $_POST['user_password'];
+     //$post_date = date('d-m-y');
+     //$post_comment_count = 0;
+     $user_image = "sp.jpg";//default value zahtjeva 
+      $randSalt = "sss";//default value zahtejva
 
      //php funckija koja premjesta sliku iz temp fajl u lokaciju koju mi želimo to je ovdje folder images u root direktoriju
-     move_uploaded_file($post_image_temp, "../images/$post_image");
+     //move_uploaded_file($post_image_temp, "../images/$post_image");
 
-     //Query za dodavanje posta u bazu podataka
-     $query ="INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
-     $query .= "VALUES ({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}' , '{$post_contnet}', '{$post_date}', {$post_comment_count}, '{$post_status}')";
+     //Query za dodavanje usera u bazu
+     $query ="INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password,user_image,randSalt) ";
+     $query .= "VALUES ('{$user_firstname}', '{$user_lastname}', '{$user_role}' , '{$username}', '{$user_email}', '{$user_password}', '{$user_image}','{$randSalt}') ";
 
      //Prosljeđivanje querya sa konekcijom
-     $add_post_query_send = mysqli_query($connection, $query);
+     $create_user_query = mysqli_query($connection, $query);
 
      //Provjera konekcije kroz funkciju confirm koju smo napravili u funcitons.php
-     comfirm($add_post_query_send);
+     comfirm($create_user_query);
 
 
 
@@ -43,64 +47,51 @@
 
 <div class="form-group">
 
- <label for="title">Post Title</label>
- <input type="text" class="form-control" name="title">
+ <label for="title">Firstname</label>
+ <input type="text" class="form-control" name="user_firstname">
 </div>
 
 <div class="form-group">
-  <select name="post_category_id" id="post_category">
-   <?php
-   
-   $query = "SELECT * FROM categories";
-   $select_categories_by_id = mysqli_query($connection, $query);
 
-   //comfirm($select_categories_by_id);
+ <label for="title">Lastname</label>
+ <input type="text" class="form-control" name="user_lastname">
+</div>
 
-   while($row = mysqli_fetch_assoc($select_categories_by_id)){
-         $cat_id = $row['cat_id'];
-         $cat_title = $row['cat_title'];
-
-         echo "<option value='{$cat_id}'>$cat_title</option>";
-
-
-   }
-   
-   ?>
-  
-  
+<div class="form-group">
+  <select name="user_role" id="">
+     <option value="subscriber">Select an option</option>
+     <option value="admin">Admin</option>
+     <option value="subscriber">Subsciber</option>
   </select>
 
   <!--<label for="post_category">Post Category Id</label>
   <input type="text" class="form-control" name="post_category_id">-->
 </div>
 
-<div class="form-group">
-  <label for="title">Post Author</label>
-  <input type="text" class="form-control" name="author">
-</div>
 
-<div class="form-group">
-  <label for="post_status">Post Status</label>
-  <input type="text" class="form-control" name="post_status">
-</div>
 
-<div class="form-group">
+<!--<div class="form-group">
   <label for="post_image">Post Image</label>
   <input type="file" name="image">
+</div>-->
+
+<div class="form-group">
+ <label for="post_tags">Username</label>
+ <input type="text" class="form-control" name="username">
 </div>
 
 <div class="form-group">
- <label for="post_tags">Post Tags</label>
- <input type="text" class="form-control" name="post_tags">
+ <label for="post_content">Email</label>
+ <input type="email" class="form-control" name="user_email">
 </div>
 
 <div class="form-group">
- <label for="post_content">Post Content</label>
- <textarea name="post_content" class="form-control" id="" cols="30" rows="10"></textarea>
+ <label for="post_content">Password</label>
+ <input type="password" class="form-control" name="user_password">
 </div>
 
 <div class="form-group">
-  <input type="submit" class="btn btn-primary" name="create_post" value="Publish Post">
+  <input type="submit" class="btn btn-primary" name="create_users" value="Add user">
 </div>
 
 

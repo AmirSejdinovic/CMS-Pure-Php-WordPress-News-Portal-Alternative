@@ -54,7 +54,7 @@
                              echo "<td><a href='comments.php?unapprove={}'>Unapprove</a></td>";
 
                              
-                             echo "<td><a href='comments.php?delete={}'>Delete</a></td>";
+                             echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
                              
                            echo "</tr>";
                            
@@ -73,17 +73,17 @@
                          //ako je postavjen get delte onda uradi ovo
                        if(isset($_GET['delete'])){
                          //sačuvaj vrijednost ključa delete u varijabli
-                          $the_comment_id = $_GET['delete'];
+                          $the_user_id = $_GET['delete'];
 
                           //query za brisanje komentara
-                       $query ="DELETE FROM comments WHERE comment_id = {$the_comment_id }";
+                       $query ="DELETE FROM users WHERE user_id = {$the_user_id}";
                        //šaljemo query u bazu
-                       $delte_query_post = mysqli_query($connection, $query);
+                       $delte_query_user = mysqli_query($connection, $query);
 
                        //provjera konekcije
-                       comfirm($delte_query_post);
+                       comfirm($delte_query_user);
                          //refresh da bi promjene bile isntant
-                       header("Location: comments.php");
+                       header("Location: users.php");
 
                        }
 

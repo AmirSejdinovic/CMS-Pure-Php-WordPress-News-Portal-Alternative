@@ -1,4 +1,6 @@
 <?php include "db.php"; ?>
+<!--Uključi sesiju -->
+<?php session_start(); ?>
 
 <?php
 
@@ -36,6 +38,15 @@ if($username !== $db_username && $password !== $db_password){
     
   header("Location: ../index.php");
 }else if($username == $db_username && $password == $db_password){
+    //Postavljamo sesiju tako što username iz baze postavljamo u globalnu varajablu session i onda kada pozovemo tu varijablu sa tim parametrom imat ćemo podatak o kojem useru se radi
+   $_SESSION['username'] = $db_username;
+  //hvatamo podatke o firstname i čuvamo
+   $_SESSION['firstname'] = $db_firstname;
+   //hvatamo podatke o lastname i čuvamo
+   $_SESSION['lastname'] = $db_lastname;
+   //hvatamo podatke o user role i čuvamo
+   $_SESSION['role'] = $db_user_role;
+   
    header("Location: ../admin");
 }else{
   header("Location: ../index.php");

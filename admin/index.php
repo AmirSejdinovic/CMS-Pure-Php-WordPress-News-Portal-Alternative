@@ -15,7 +15,11 @@
 
                         <h1 class="page-header">
                             Welcome to admin
-                            <small>Author</small>
+                            
+                            <small><?php
+                            //Prikazujemo ime usera koji se logovo. To smo omogućili na način što smo u login.php postavili sesije i sačuvali podatke o useru u globalnim varijablima. Nakon toga u ovom fajlu uključili smo sesije i samo pozivamo sa globalnom varijablom sa paremetrom iz login.php i vršimo echo
+                             echo $_SESSION['username'];
+                            ?></small>
                         </h1>
                        
                     </div>

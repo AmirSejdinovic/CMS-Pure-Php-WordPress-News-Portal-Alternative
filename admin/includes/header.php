@@ -1,6 +1,8 @@
 <?php ob_start(); ?>
 <?php include '../includes/db.php'; ?>
 <?php include 'functions.php'; ?>
+<!--uključujemo sesiju-->
+<?php session_start(); ?>
 
 
 

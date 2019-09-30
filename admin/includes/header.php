@@ -5,12 +5,12 @@
 <?php session_start(); ?>
 
 <?php
- //if statemet koja na osnovu userr rol iz database radi redirekciju na index.php svakog usera koji nije admin
- if(isset($_SESSION['role'])){
+ //if statemet ako nema user rol tj ako sesija nema bilo kakav user rol iz baze podataka odbij bilo koji pokušaj logiranja u admin, to ćeš uraditi tako što redirektujemo te pokušaje na index.php
+ if(!isset($_SESSION['role'])){
 
-    if($_SESSION['role'] !== 'admin'){
-        header("Location: ../index.php");
-    }
+   
+ header("Location: ../index.php");
+   
  }
 
 ?>

@@ -4,6 +4,17 @@
 <!--uključujemo sesiju-->
 <?php session_start(); ?>
 
+<?php
+ //if statemet koja na osnovu userr rol iz database radi redirekciju na index.php svakog usera koji nije admin
+ if(isset($_SESSION['role'])){
+
+    if($_SESSION['role'] !== 'admin'){
+        header("Location: ../index.php");
+    }
+ }
+
+?>
+
 
 
 

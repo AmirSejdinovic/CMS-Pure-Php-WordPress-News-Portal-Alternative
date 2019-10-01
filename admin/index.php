@@ -175,6 +175,69 @@
 </div>
                 <!-- /.row -->
 
+
+
+                <?php 
+                  
+                  $query = "SELECT * FROM posts WHERE post_status = 'draft'";
+                  $select_all_draft_posts = mysqli_query($connection, $query);
+                  $post_draft_count = mysqli_num_rows($select_all_draft_posts);
+
+                  $query = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
+                  $select_all_unapproved_comments = mysqli_query($connection, $query);
+                  $comments_unaproved_count = mysqli_num_rows($select_all_unapproved_comments);
+
+                  $query = "SELECT * FROM users WHERE user_role = 'subscriber'";
+                  $select_all_users_subscriber = mysqli_query($connection, $query);
+                  $users_subscriber_count = mysqli_num_rows($select_all_users_subscriber);
+
+
+                    ?>
+                <div class="row">
+                <script type="text/javascript">
+                //Dodavanje gogole chartsa
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Data', 'Count'],
+
+          //izlazak iz javascripta i prelazak u php u kome pravimo dvije array od kojih je jedna statična a druga je dinamična sa brojevima iz baze podataka nakon toga vršimo for lop na tim areyima i vršimo echo u obliku elementa javascripta 
+          <?php
+
+          $elemnt_text = ['Active Posts','Draft Posts', 'Comments','Unapproved comments' ,'Users','Subscribers','Categories'];
+          $elemnt_count = [$post_counts, $post_draft_count , $comment_count , $comments_unaproved_count,$count_of_users,$users_subscriber_count, $count_of_categories];
+
+          for($i = 0; $i < 7; $i++){
+            
+            echo "['{$elemnt_text[$i]}'" . "," . "{$elemnt_count[$i]}],";
+
+          }
+          ?>
+
+         // ['posts', 1000],
+
+         //izlazak iz php i prelazak u javascript
+          
+        ]);
+
+        var options = {
+          chart: {
+            title: '',
+            subtitle: '',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+
+<div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+                </div>
+
             </div>
             <!-- /.container-fluid -->
 

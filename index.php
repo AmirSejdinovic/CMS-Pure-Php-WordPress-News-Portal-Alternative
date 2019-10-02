@@ -39,10 +39,7 @@
          $post_content = substr($row['post_content'],0,150);//čupanje post_contene rowa iz rabele, pravljenje putem fije substr excerpta od 0 do 150 karaktera
           $post_status = $row['post_status'];
 
-          if($post_status !== 'published'){
-             echo "<h1 class='text-center'>No post here sorry</h1>";
-
-          }else{
+          if($post_status == 'published'){
 
 
 

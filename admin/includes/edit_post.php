@@ -74,6 +74,8 @@ if(isset($_GET['p_id'])){
 
         comfirm($update_post_query);
 
+        echo "<p class='bg-success'>Post Updated. <a href='../post.php?p_id={$post_id_current}'>View post</a> or <a href='posts.php'>Edit More Posts</a></p>";
+
 
 
 
@@ -156,7 +158,7 @@ if(isset($_GET['p_id'])){
 </div>
 
 <div class="form-group">
-  <input type="submit" class="btn btn-primary" name="update_post" value="Publish Post">
+  <input type="submit" class="btn btn-primary" name="update_post" value="Edit Post">
 </div>
 
 

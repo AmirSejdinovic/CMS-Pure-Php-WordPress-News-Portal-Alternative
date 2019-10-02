@@ -1,5 +1,7 @@
-    
-    
+
+<!--Uključi sesiju -->
+<?php session_start(); ?>
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -41,12 +43,25 @@
                    <li>
                         <a href="admin">Admin</a>
                     </li>
-                   <!-- <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>-->
+                 
+                 <?php
+                 //Ako ima sesija sa rolom usera onda uradi ovo
+                 if(isset($_SESSION['role'])){
+
+                    //ako je postavljen get parametara sa p_id tj ako ide na post onda 
+                     if(isset($_GET['p_id'])){
+
+                        //uzmi paramtear id iz geta i sačuvaj u varijabli 
+                       $curent_id = $_GET['p_id'];
+
+                       //Prikaži link koji upućuje na admin skeciju stranicu edit za taj post i uhvati taj post prema get parametru p_id dakle prema id
+                        echo "<li><a href='admin/posts.php?source=edit_post&p_id={$curent_id}'>Edit Post</a></li>";
+                     }
+                 }
+                 
+                 ?>
+                    
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

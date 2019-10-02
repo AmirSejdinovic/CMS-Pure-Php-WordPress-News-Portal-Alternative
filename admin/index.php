@@ -178,6 +178,9 @@
 
 
                 <?php 
+                  $query = "SELECT * FROM posts WHERE post_status = 'published' ";
+                  $all_published_posts = mysqli_query($connection, $query);
+                  $published_posts = mysqli_num_rows($all_published_posts);
                   
                   $query = "SELECT * FROM posts WHERE post_status = 'draft'";
                   $select_all_draft_posts = mysqli_query($connection, $query);
@@ -206,10 +209,10 @@
           //izlazak iz javascripta i prelazak u php u kome pravimo dvije array od kojih je jedna statična a druga je dinamična sa brojevima iz baze podataka nakon toga vršimo for lop na tim areyima i vršimo echo u obliku elementa javascripta 
           <?php
 
-          $elemnt_text = ['Active Posts','Draft Posts', 'Comments','Unapproved comments' ,'Users','Subscribers','Categories'];
-          $elemnt_count = [$post_counts, $post_draft_count , $comment_count , $comments_unaproved_count,$count_of_users,$users_subscriber_count, $count_of_categories];
+          $elemnt_text = ['AllPosts','Active Posts','Draft Posts', 'Comments','Unapproved comments' ,'Users','Subscribers','Categories'];
+          $elemnt_count = [$post_counts, $published_posts , $post_draft_count , $comment_count , $comments_unaproved_count,$count_of_users,$users_subscriber_count, $count_of_categories];
 
-          for($i = 0; $i < 7; $i++){
+          for($i = 0; $i < 8; $i++){
             
             echo "['{$elemnt_text[$i]}'" . "," . "{$elemnt_count[$i]}],";
 

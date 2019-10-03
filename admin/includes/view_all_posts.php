@@ -1,10 +1,35 @@
 <?php
 
 if(isset($_POST['checkBoxArray'])){
-  
-  foreach($_POST['checkBoxArray'] as $checkBoxValue){
+  //prolazi koroz checkboxove sa name checkBoxArray (koje smo predhodno postavili kao arayy u samom name) i za svaki chekirani box koji se nalazi u array postavlja varjalbu $checkBoxValue i čuva sve njegove paramtere u toj varijabli
+  foreach($_POST['checkBoxArray'] as $postValueId){
       
     $bulk_options = $_POST['bulk_options'];
+    //provjeramavamo varaijablu bulk options i poredimo je sa raznim slučajevima a to su kod nas opcije iz select elementa dakle "published", "draft", "delete". Znači kada je bulk options ima parametar npr published onda uradio ovo a kada ima neki drugi parametar onda uradi nešto drugo
+    switch($bulk_options){
+
+      //Slučaj ako je selektovan publish onda uradi ovu queryi za update posta sa draft na published
+       case 'published':
+         $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = {$postValueId} ";
+         $send_query_to_published_status = mysqli_query($connection, $query);
+         comfirm($send_query_to_published_status );
+         break;
+
+           //Slučaj ako je selektova draft onda uradi query za update posta na post status draft
+         case 'draft':
+         $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = {$postValueId} ";
+         $send_query_to_draft_status = mysqli_query($connection, $query);
+         comfirm($send_query_to_draft_status);
+         break;
+          //Slučaj ako je selektovan delete onda uradi query za delete posta te obriši post
+         case 'delete':
+          $query = "DELETE FROM posts WHERE post_id = {$postValueId} ";
+          $send_delete_post_query = mysqli_query($connection, $query);
+          comfirm($send_delete_post_query);
+         break;
+
+
+    }
   }
 }
 
@@ -18,9 +43,9 @@ if(isset($_POST['checkBoxArray'])){
           <div id="bulkOptionsContainer" class="col-xs-4">
             <select  class="form-control" name="bulk_options" id="">
               <option value="">Select Options</option>
-              <option value="">Publish</option>
-              <option value="">Draft</option>
-              <option value="">Delete</option>
+              <option value="published">Publish</option>
+              <option value="draft">Draft</option>
+              <option value="delete">Delete</option>
             
             </select>
           </div>

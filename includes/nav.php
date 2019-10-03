@@ -43,6 +43,10 @@
                    <li>
                         <a href="admin">Admin</a>
                     </li>
+
+                    <li>
+                        <a href="registration.php">Registration</a>
+                    </li>
                  
                  <?php
                  //Ako ima sesija sa rolom usera onda uradi ovo

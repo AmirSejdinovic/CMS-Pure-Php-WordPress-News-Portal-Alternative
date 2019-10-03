@@ -24,8 +24,8 @@
      //move_uploaded_file($post_image_temp, "../images/$post_image");
 
      //Query za dodavanje usera u bazu
-     $query ="INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password,user_image,randSalt) ";
-     $query .= "VALUES ('{$user_firstname}', '{$user_lastname}', '{$user_role}' , '{$username}', '{$user_email}', '{$user_password}', '{$user_image}','{$randSalt}') ";
+     $query ="INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password,user_image) ";
+     $query .= "VALUES ('{$user_firstname}', '{$user_lastname}', '{$user_role}' , '{$username}', '{$user_email}', '{$user_password}', '{$user_image}') ";
 
      //Prosljeđivanje querya sa konekcijom
      $create_user_query = mysqli_query($connection, $query);

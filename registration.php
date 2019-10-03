@@ -10,9 +10,32 @@
        $pasword = $_POST['password'];
 
          //Čišćenje unesenih podataka u input polja tako da se u bazu ne mogu injektovati SQL statements nego idu čisti podaci. Zbog toga su potrebna dva parametra konekcija i input podaci kako bi se sve to procistilo
-         echo $username = mysqli_real_escape_string($connection, $username);
+         $username = mysqli_real_escape_string($connection, $username);
         $email = mysqli_real_escape_string($connection, $email);
         $password = mysqli_real_escape_string($connection, $pasword);
+
+         //Provjera default valua za randSalt ključeva koji će nam biti potrebni kod enkripcije sifre
+        $query = "SELECT randSalt FROM users";
+        $select_randSalt_query = mysqli_query($connection, $query);
+
+        if(!$select_randSalt_query ){
+            die("Query Failed" . mysqli_error($connection));
+        }
+         //Čuvamo u varaijabli samo rand salt kljuc
+        $row = mysqli_fetch_assoc($select_randSalt_query);
+
+        $salt = $row['randSalt'];
+
+          //QUery za insert u bazu podataka input unose usera
+        $query = "INSERT INTO users (username, user_email, user_password, user_role, user_image) ";
+        $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '1.jpg')";
+        $register_query_user = mysqli_query($connection, $query);
+        //Provjera konekcije
+        if(!$register_query_user){
+            die("QUERY FAILED" . mysqli_error($connection));
+        }
+
+        
 
        
     }

@@ -28,9 +28,9 @@
 
      //Provjera konekcije kroz funkciju confirm koju smo napravili u funcitons.php
      comfirm($add_post_query_send);
-
-
-
+      //mysqli funkcija koja ubacuje zadnji id
+     $post_id_current = mysqli_insert_id($connection);
+     echo "<p class='bg-success'>Post Created. <a href='../post.php?p_id={$post_id_current}'>View post</a> or <a href='posts.php'>Edit More Posts</a></p>"; 
 
 
 
@@ -79,9 +79,21 @@
   <input type="text" class="form-control" name="author">
 </div>
 
+
+
+
 <div class="form-group">
+
   <label for="post_status">Post Status</label>
-  <input type="text" class="form-control" name="post_status">
+  <select name="post_status" id="">
+    <option value="draft">Select Options</option>
+    <option value="published">Published</option>
+    <option value="draft">Draft</option>
+  </select>
+
+ 
+
+
 </div>
 
 <div class="form-group">

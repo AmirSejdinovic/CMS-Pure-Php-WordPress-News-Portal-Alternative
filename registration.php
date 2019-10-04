@@ -27,7 +27,10 @@
          //Čuvamo u varaijabli samo rand salt kljuc
         $row = mysqli_fetch_assoc($select_randSalt_query);
 
+        //Dobijamo valu od rand salta iz defaulut podataka baze podataka
         $salt = $row['randSalt'];
+          //crypt funkcijom vršimo kripotvanje pasworda tako da hakeri isti ne bi mogli probiti. Dakle za ovu funkicju potrebna su dva parametra i to sifra iz baze pdotaka i salt ključevi iz iste na onsovu tih podataka ova funkcija generise jak password  
+        $password = crypt($password, $salt);
 
           //QUery za insert u bazu podataka input unose usera
         $query = "INSERT INTO users (username, user_email, user_password, user_role, user_image) ";

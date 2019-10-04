@@ -9,6 +9,9 @@
        $email = $_POST['email'];
        $pasword = $_POST['password'];
 
+       //Ako polja nisu prazna onda uradi kod ispod i ispisi poruku da je uspjesno registrovana
+       if(!empty($username) && !empty($email) && !empty($pasword)){
+            
          //Čišćenje unesenih podataka u input polja tako da se u bazu ne mogu injektovati SQL statements nego idu čisti podaci. Zbog toga su potrebna dva parametra konekcija i input podaci kako bi se sve to procistilo
          $username = mysqli_real_escape_string($connection, $username);
         $email = mysqli_real_escape_string($connection, $email);
@@ -34,10 +37,23 @@
         if(!$register_query_user){
             die("QUERY FAILED" . mysqli_error($connection));
         }
+         
+        $message = "Your Registration hase been submited";
+
+       }else{
+
+        //Ako su polja prazna onda ispisi ovo
+           $message = "Fields canot be empty";
+       }
+        
+     
 
         
 
        
+    }else{
+        //Trik da nam ne pirakzuje nedefinisanu varijablu
+        $message = "";
     }
   
   ?>
@@ -56,6 +72,7 @@
                 <div class="form-wrap">
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+                    <h6 class="text-center"><?php echo $message; ?></h6>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">

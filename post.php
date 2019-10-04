@@ -23,8 +23,14 @@
        if(isset($_GET['p_id'])){
               
           $current_post_id =  $_GET['p_id'];
+           //query za updatovanje tabele post_views_count i kada god nek ode na post update se vrši tako što se dodaje 1 u tabelu na osnovu toga možemo da vidimo broj pregleda
+          $view_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE post_id = $current_post_id  ";
+          $send_query = mysqli_query($connection, $view_query);
 
-       }
+          if(!$view_query){
+              die("QUERY FAILED: " . mysqli_error($connection));
+          }
+       
      //Izaberi sve iz post tabele
      $query = "SELECT * FROM posts WHERE post_id = $current_post_id ";
       //uspostava konekcije sa bazom i prosljeđivanje queriya
@@ -74,8 +80,15 @@
 <?php
 
 //nastavak whille loop
-
-     }//kraj whille loop
+     }
+     }else{
+         //Ako nema post id redirektuj
+         header("Location: index.php");
+     
+    
+    
+    
+    }//kraj whille loop
    ?>
 
 

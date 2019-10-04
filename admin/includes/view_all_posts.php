@@ -44,6 +44,7 @@ if(isset($_POST['checkBoxArray'])){
         $post_tags = $row['post_tags'];
         $post_content = $row['post_content'];
         $post_comment_count = $row['post_comment_count'];
+
     }
     //query za kloniranje posta 
     $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags,post_status, 	post_comment_count) ";
@@ -97,6 +98,7 @@ if(isset($_POST['checkBoxArray'])){
                             <th>View post</th>
                             <th>Edit</th>
                             <th>Delete</th>
+                            <th>Views</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -125,6 +127,8 @@ if(isset($_POST['checkBoxArray'])){
                            $post_tags = $row['post_tags'];
                            $post_comment_count = $row['post_comment_count'];
                            $post_date = $row['post_date'];
+                           $post_views = $row['post_views_count'];
+
 
 
                            echo "<tr>";
@@ -162,6 +166,7 @@ if(isset($_POST['checkBoxArray'])){
                              echo "<td><a href='../post.php?p_id={$post_id}'>View post</a></td>";
                              echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
                              echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
+                             echo "<td>{$post_views}</td>";
                              
                            echo "</tr>";
                            

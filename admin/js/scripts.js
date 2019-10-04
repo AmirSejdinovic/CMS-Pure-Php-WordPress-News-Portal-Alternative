@@ -2,9 +2,9 @@
 
   //EDITOR CKEDITOR
   ClassicEditor
-  .create( document.querySelector( '#body' ) )
-  .catch( error => {
-      console.error( error );
+  .create(document.querySelector( '#body' ) )
+  .catch(error => {
+      console.error(error);
   } );
   //jquery selektujemo element sa id selectAllBoxes nakon toga dodajemo mu event listener clikc i onda pišem if recenicu
   $(document).ready(function(){
@@ -21,6 +21,22 @@
       });
      }
      });
+
+
+     //loader 
+
+     //pravimo varijablu sa div elemenitma koji imaju id koji su stilizovani sa css
+     var div_box = "<div id='load-screen'><div id='loading'></div></div>";
+     //putem jquerya pripajamo gornju varijablu dakle div sa body elementom
+     $('body').prepend(div_box);
+     //ciljamo div sa id load-screen onda odlazemo 700 miliskeundi kasnije vrsimo fadeOut za 600 ms i nakon toga odstranujemo
+     $('#load-screen').delay(700).fadeOut(600, function(){
+       $(this).remove();
+     })
+
+
+
+
   });
 
 

@@ -16,6 +16,7 @@ if(isset($_GET['edit_user'])){
    $user_image = $row['user_image'];
    $user_role = $row['user_role'];
    $user_password = $row['user_password'];
+   $salt = $row['randSalt'];
   }
 
 }
@@ -43,13 +44,30 @@ if(isset($_GET['edit_user'])){
      //php funckija koja premjesta sliku iz temp fajl u lokaciju koju mi želimo to je ovdje folder images u root direktoriju
      //move_uploaded_file($post_image_temp, "../images/$post_image");
 
+     //query za selektovanje randSalt tabele iz db
+     $query = "SELECT randSalt FROM users";
+     $select_randSalt_query = mysqli_query($connection, $query);
+     //test
+     if(!$select_randSalt_query){
+       die("QUERY FAILED" . mysqli_error($connection));
+     }
+     //čuvamo u varaijblu podataka iz baze
+     $row = mysqli_fetch_assoc($select_randSalt_query);
+     //biramo teablu iz baze i čuvamo podatke iz te tabele u varaijblu kod nas su to salt ključevi
+     $salt = $row['randSalt'];
+      //kreiramo crypt funkciju i onda čuvamo tako generisanu šifru u varijabli koju zatim prosljeđujemo u query za update kako bi ista išla u bazu
+     $hashed_password = crypt($user_password, $salt);
+
+
+
+
      $query ="UPDATE users SET ";
      $query .="user_firstname = '{$user_firstname}', ";
      $query .="user_lastname ='{$user_lastname}', ";
      $query .="user_role = '{$user_role}', ";
      $query .="username = '{$username}', ";
      $query .="user_email = '{$user_email}', ";
-     $query .="user_password = '{$user_password}' ";
+     $query .="user_password = '{$hashed_password }' ";
      $query .="WHERE user_id = {$current_user_id} ";
      
      $update_user_query = mysqli_query($connection, $query);

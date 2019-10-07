@@ -2,14 +2,21 @@
 
 function users_online(){
 
-  global $connection;
+  if(isset($_GET['onlineusers'])){
 
-   //Pošto imamo postavljene sesije u incudes/header.php ovdje u varijabli $session postavljamo funkciju za dobivanje id od sesije
+
+   global $connection;
+
+   if(!$connection){
+     session_start();
+     include("../includes/db.php");
+
+     //Pošto imamo postavljene sesije u incudes/header.php ovdje u varijabli $session postavljamo funkciju za dobivanje id od sesije
    $session = session_id();
    //Dobivamo vrijeme
    $time = time();
    //Vrjeme outputa u sekontama
-   $time_out_in_seconds = 60;
+   $time_out_in_seconds = 05;
    //Računamo
    $time_out = time() - $time_out_in_seconds;
     
@@ -31,8 +38,19 @@ function users_online(){
     
    //Ovom query selektujemo sve iz tabele users_online gdje je time veće od vrijednosti varijable $time_out tj 60 sekundi
    $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out' ");
-   return $count_user = mysqli_num_rows($users_online_query);
+   echo $count_user = mysqli_num_rows($users_online_query);
+
+
+
+   }
+
+   
+  }//kraj get reuesta
+
+  
 }
+users_online();
+
 
 function comfirm($result){
 //Provjera konekcije funkcija

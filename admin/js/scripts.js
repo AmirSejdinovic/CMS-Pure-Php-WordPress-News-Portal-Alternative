@@ -39,6 +39,20 @@
 
   });
 
+  //Kreiramo funckiju u kojoj ćemo postaviti ajax funkcionalsnosti da dobijamo instant rezultate iz baze podataka
+  function loadUsersOnline(){
+          //get sa parametrima
+       $.get("functions.php?onlineusers=result", function(data){
+         //prikazujemo podatke iz requesta unutar elementa sa klasom .usersonline
+         $(".usersonline").text(data);
+       });
+       
+  }
+  setInterval(function(){
+    loadUsersOnline();
+  },500);
+  
+
 
 
 

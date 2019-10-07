@@ -22,18 +22,6 @@
 </h1>
 
      <?php
-
-
-     //Query za selektovanje svih postova pomoću koje ćemo odrediti koliko tačno ima redova u bazi tj postova. Ova informacija pomoći će nam prilikom izrade pagination funkcije
-     $posts_query_count = "SELECT * FROM posts";
-     //Šaljemo query u bazu podataka
-     $post_count_send = mysqli_query($connection, $posts_query_count); 
-     //mysqli funkcijom mysqli_num_rows utvrđujemo tačan broj redova u bazi tj tačan broj postova
-     $count = mysqli_num_rows($post_count_send);
-      
-     //Ovdje djelimo broj redova sačuvan u varijabli na 5 i to uokvirujemo u php funkciju ceil() koja vraća cijeli broj tzv intiger jer bez tog cijelog broja neće nam raditi pagiancija. Dakle kada takav broj sačuvamo u varijabli tu varijablu upotrebljavamo na dnu stranice u for loop pomoću koje postavljamo linkove za paginaciju
-      $count = ceil($count / 5); 
-
      //Izaberi sve iz post tabele
      $query = "SELECT * FROM posts ";
       //uspostava konekcije sa bazom i prosljeđivanje queriya
@@ -104,18 +92,6 @@
         <!-- /.row -->
 
         <hr>
-
-      <ul class="pager">
-      <?php
-      //Foor loop za pagianciju dakle ovdje lop ide sve dok je varijabla $i manja ili jednaka broju iz varijable $count tj broju redova baze podatak koja je podjeljena na određeni broj , nakon toga vršimo prikaz tačnog broj tj varijable $i i u href tag dodajemo GET atribut na koga ćemo vezati funkcionalsnost tako da kada se klikne na određeni broj da nas salje konkretnu stranicu.
-      for($i = 1; $i <= $count; $i++){
-         echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
-      }
-      
-      
-      ?>
-     
-      </ul>  
 <?php 
 include 'includes/footer.php';
 

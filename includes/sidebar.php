@@ -60,7 +60,7 @@
                 $cat_title = $row['cat_title'];
                 $cat_id = $row['cat_id'];
                 
-                 echo "<l><a href='category.php?category=$cat_id'>{$cat_title}</li>";
+                 echo "<l><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
 
               }
             

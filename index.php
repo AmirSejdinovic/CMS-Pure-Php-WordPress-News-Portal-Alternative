@@ -22,6 +22,22 @@
 </h1>
 
      <?php
+      //provjeravamo da li je postavljen get request sa parametrom page, ako je postavlje tj ako je kliknut onda napravi varijablu $page i u nju dodaj parametar tog gea
+     if(isset($_GET['page'])){
+       
+        $page = $_GET['page'];
+     }else{
+         //ako nije onda varijablu $page ostavi praznu
+         $page = "";
+     }
+
+     //Ako je $page prazna ili ima parametar 1 to znači da se radi o prvoj stranici i tada napravi varijablu $page_1 i dodaj joj vrijednost 0 tako da uvjek prikaže nove postove
+     if($page == "" || $page == 1 ){
+         $page_1 = 0;
+     }else{
+         //ako vrijednost page nije prazno ili 1 onda u tu varijablu dodaj ovu jednačinu vrjednost iz varijable $page pomnoži sa 5 i onda oduzmi 5 na taj način na svakoj sledećoj strani dobijamo nove postove
+         $page_1 = ($page * 5 ) - 5;
+     }
 
 
      //Query za selektovanje svih postova pomoću koje ćemo odrediti koliko tačno ima redova u bazi tj postova. Ova informacija pomoći će nam prilikom izrade pagination funkcije
@@ -35,7 +51,7 @@
       $count = ceil($count / 5); 
 
      //Izaberi sve iz post tabele
-     $query = "SELECT * FROM posts ";
+     $query = "SELECT * FROM posts ORDER BY post_id DESC LIMIT $page_1, 5";
       //uspostava konekcije sa bazom i prosljeđivanje queriya
      $select_all_posts = mysqli_query($connection, $query);
 

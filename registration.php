@@ -16,21 +16,25 @@
          $username = mysqli_real_escape_string($connection, $username);
         $email = mysqli_real_escape_string($connection, $email);
         $password = mysqli_real_escape_string($connection, $pasword);
+         
+         //novi sistem enkripcije possworda putem password_hash funkcije i radimo tosa BCRYPT koja je slična BLOWFISH enkripciji
+         $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+        
+        //Provjera default valua za randSalt ključeva koji će nam biti potrebni kod enkripcije sifre
+        //$query = "SELECT randSalt FROM users";
+       //$select_randSalt_query = mysqli_query($connection, $query);
 
-         //Provjera default valua za randSalt ključeva koji će nam biti potrebni kod enkripcije sifre
-        $query = "SELECT randSalt FROM users";
-        $select_randSalt_query = mysqli_query($connection, $query);
-
-        if(!$select_randSalt_query ){
+        /*if(!$select_randSalt_query ){
             die("Query Failed" . mysqli_error($connection));
-        }
+        }*/
          //Čuvamo u varaijabli samo rand salt kljuc
-        $row = mysqli_fetch_assoc($select_randSalt_query);
+
+        /*$row = mysqli_fetch_assoc($select_randSalt_query);
 
         //Dobijamo valu od rand salta iz defaulut podataka baze podataka
         $salt = $row['randSalt'];
           //crypt funkcijom vršimo kripotvanje pasworda tako da hakeri isti ne bi mogli probiti. Dakle za ovu funkicju potrebna su dva parametra i to sifra iz baze pdotaka i salt ključevi iz iste na onsovu tih podataka ova funkcija generise jak password  
-        $password = crypt($password, $salt);
+        $password = crypt($password, $salt);*/
 
           //QUery za insert u bazu podataka input unose usera
         $query = "INSERT INTO users (username, user_email, user_password, user_role, user_image) ";

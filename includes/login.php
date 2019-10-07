@@ -34,10 +34,12 @@ while($row = mysqli_fetch_assoc($select_user_query)){
 }
 
 //Ovim obrćemo proces tako da unsesenoj sifri u input dodajemo sifru iz baze i onda na onsovu toga radimo crypt fiju i kasnije možemo da se ulogujemo sa passowrdom koji smo unijeli provobitno
-$password = crypt($password, $db_password );
+//$password = crypt($password, $db_password );
 
 //If statement koja provjerava uneseni username i pasword sa podacima iz baze podataka ako se ti podaci ne podudaraju onda redirektuje na index.php ako se podudaraju onda redirektuje na admin sekciju ako se bilo šta mimo toga desi npr pogodi ime ali ne pogodi pasword onda opet redirektuje na index.php
-if($username === $db_username && $password === $db_password){
+
+//Ovaj if statement je prilagođen za novi password encript sistem i taj sitem radi sa funkcijom password_verify u koju unosimo unešeni password sačuvan u varijablu i password iz baze dakle on sam upoređuje ta dava passworda i ako su isti onda redirektuje u admin panel ako ne onda redirektuje na index.php
+if(password_verify($password, $db_password)){
     //Postavljamo sesiju tako što username iz baze postavljamo u globalnu varajablu session i onda kada pozovemo tu varijablu sa tim parametrom imat ćemo podatak o kojem useru se radi
    $_SESSION['username'] = $db_username;
    //hvatamo podatke o firstname i čuvamo

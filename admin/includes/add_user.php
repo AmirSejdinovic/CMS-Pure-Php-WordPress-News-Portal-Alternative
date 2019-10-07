@@ -20,6 +20,9 @@
      $user_image = "sp.jpg";//default value zahtjeva 
       $randSalt = "sss";//default value zahtejva
 
+      //enkripcija passworda i sotranje u varijablu koju ćemo proslijediti u query i onda tako u bazu
+      $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost'=>10));
+
      //php funckija koja premjesta sliku iz temp fajl u lokaciju koju mi želimo to je ovdje folder images u root direktoriju
      //move_uploaded_file($post_image_temp, "../images/$post_image");
 

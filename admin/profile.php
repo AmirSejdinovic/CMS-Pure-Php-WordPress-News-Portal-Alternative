@@ -37,7 +37,7 @@
            
     $user_firstname = $_POST['user_firstname'];
     $user_lastname = $_POST['user_lastname'];
-    $user_role = $_POST['user_role'];
+    //$user_role = $_POST['user_role'];
 
     $username = $_POST['username'];
 
@@ -52,6 +52,8 @@
     //$post_comment_count = 0;
     $user_image = "sp.jpg";//default value zahtjeva 
      $randSalt = "sss";//default value zahtejva
+
+     $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost'=>12));
 
     //php funckija koja premjesta sliku iz temp fajl u lokaciju koju mi želimo to je ovdje folder images u root direktoriju
     //move_uploaded_file($post_image_temp, "../images/$post_image");
@@ -107,29 +109,6 @@
  <input type="text" class="form-control" name="user_lastname" value="<?php echo $user_lastname; ?>">
 </div>
 
-
-
-<div class="form-group">
-  <select name="user_role" id="">
-  <option value="subscriber"><?php echo $user_role; ?></option>
-  <?php
-   if($user_role == 'admin'){
-    echo "<option value='subscriber'>Subsciber</option>";
-   }else{
-    echo "<option value='admin'>Admin</option>";
-   }
-  ?>
-     
-     
-     
-  </select>
-
-  <!--<label for="post_category">Post Category Id</label>
-  <input type="text" class="form-control" name="post_category_id">-->
-</div>
-
-
-
 <!--<div class="form-group">
   <label for="post_image">Post Image</label>
   <input type="file" name="image">
@@ -147,7 +126,7 @@
 
 <div class="form-group">
  <label for="post_content">Password</label>
- <input type="password" class="form-control" name="user_password" value="<?php echo  $user_password; ?>">
+ <input autocomplete="off" type="password" class="form-control" name="user_password" value="<?php echo  $user_password; ?>">
 </div>
 
 <div class="form-group">

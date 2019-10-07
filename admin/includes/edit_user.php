@@ -19,7 +19,7 @@ if(isset($_GET['edit_user'])){
    $salt = $row['randSalt'];
   }
 
-}
+
   if(isset($_POST['edit_user'])){
 
            
@@ -45,7 +45,7 @@ if(isset($_GET['edit_user'])){
      //move_uploaded_file($post_image_temp, "../images/$post_image");
 
      //query za selektovanje randSalt tabele iz db
-     $query = "SELECT randSalt FROM users";
+     /*$query = "SELECT randSalt FROM users";
      $select_randSalt_query = mysqli_query($connection, $query);
      //test
      if(!$select_randSalt_query){
@@ -56,7 +56,27 @@ if(isset($_GET['edit_user'])){
      //biramo teablu iz baze i čuvamo podatke iz te tabele u varaijblu kod nas su to salt ključevi
      $salt = $row['randSalt'];
       //kreiramo crypt funkciju i onda čuvamo tako generisanu šifru u varijabli koju zatim prosljeđujemo u query za update kako bi ista išla u bazu
-     $hashed_password = crypt($user_password, $salt);
+     $hashed_password = crypt($user_password, $salt);*/
+
+     if(!empty($user_password)){
+       $query_password = "SELECT user_password FROM users WHERE user_id = $current_user_id ";
+       $get_user = mysqli_query($connection,$query_password);
+      comfirm($get_user);
+
+      $row = mysqli_fetch_assoc($get_user);
+
+      $db_user_password = $row['user_password'];
+
+
+
+
+     }
+     if($db_user_password != $user_password){
+      $hashed_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost'=>10));
+     }else{
+      $hashed_password = $user_password;
+     }
+     
 
 
 
@@ -75,16 +95,10 @@ if(isset($_GET['edit_user'])){
      comfirm($update_user_query );
 
 
-
-
-
-
-
-
-
-
-
   }
+}else{
+  header("Location: index.php");
+}
 
 ?>
 
@@ -143,7 +157,7 @@ if(isset($_GET['edit_user'])){
 
 <div class="form-group">
  <label for="post_content">Password</label>
- <input type="password" class="form-control" name="user_password" value="<?php echo  $user_password; ?>">
+ <input  autocpmplete="off" type="password" class="form-control" name="user_password" value="<?php //echo  $user_password; ?>">
 </div>
 
 <div class="form-group">

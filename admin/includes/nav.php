@@ -30,7 +30,7 @@
                     
                     if(isset($_SESSION['username'])){
                       
-                        echo $_SESSION['firstname'] . $_SESSION['lastname'];
+                        echo $_SESSION['firstname'] ." " . $_SESSION['lastname'];
 
                     }
                     

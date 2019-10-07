@@ -1,8 +1,13 @@
 
 <?php include 'includes/header.php'; ?>
+
 <body>
 
     <div id="wrapper">
+
+    <?php
+      
+    ?>
 
 <?php include 'includes/nav.php'; ?>
         <div id="page-wrapper">
@@ -21,7 +26,9 @@
                              echo $_SESSION['username'];
                             ?></small>
                         </h1>
-                       
+                        <h1>
+                        
+                      </h1>
                     </div>
                 </div>
 

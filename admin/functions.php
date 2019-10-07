@@ -1,5 +1,39 @@
 <?php
 
+function users_online(){
+
+  global $connection;
+
+   //Pošto imamo postavljene sesije u incudes/header.php ovdje u varijabli $session postavljamo funkciju za dobivanje id od sesije
+   $session = session_id();
+   //Dobivamo vrijeme
+   $time = time();
+   //Vrjeme outputa u sekontama
+   $time_out_in_seconds = 60;
+   //Računamo
+   $time_out = time() - $time_out_in_seconds;
+    
+   //Query kojom selektujemo sve iz tabele users_online gdje je red sesija jednak id sesije
+   $query = "SELECT * FROM users_online WHERE session = '$session'";
+   //Šaljemo query u bazu
+   $send_query = mysqli_query($connection, $query);
+   //brojimo broj redova u tabeli
+   $count = mysqli_num_rows($send_query);
+   
+   //Ako nema redova dakle ako je novi user onda postavi sesion id i sesion time za tog usera
+   if($count == NULL ){
+     mysqli_query($connection, "INSERT INTO users_online(session, time) VALUES('$session', '$time') ");  
+   }else{
+       //ako vec postoji user onda vrsimo update tabele
+    mysqli_query($connection, "UPDATE users_online SET time = '$time' WHERE session = '$session' "); 
+
+   }
+    
+   //Ovom query selektujemo sve iz tabele users_online gdje je time veće od vrijednosti varijable $time_out tj 60 sekundi
+   $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out' ");
+   return $count_user = mysqli_num_rows($users_online_query);
+}
+
 function comfirm($result){
 //Provjera konekcije funkcija
 global $connection;

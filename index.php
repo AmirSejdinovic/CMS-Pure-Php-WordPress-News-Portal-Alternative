@@ -21,9 +21,15 @@
     <small>Secondary Text</small>
 </h1>
 
+    
      <?php
+
+     //postavljamo broj postova u varijablu kako bi na lak način mogli da mijenjamo i kako bi mogli lako da uradimo funkcionalnost iz admin panela da određujemo koliko članaka želimo da prikažemo prije paginacije. Također ovu varijablu postavljamo na mjesto statičnih brojeva o limitu članak dakle umjesto našeg broja 5 
+      $per_page = 2;
       //provjeravamo da li je postavljen get request sa parametrom page, ako je postavlje tj ako je kliknut onda napravi varijablu $page i u nju dodaj parametar tog gea
      if(isset($_GET['page'])){
+
+        
        
         $page = $_GET['page'];
      }else{
@@ -36,7 +42,7 @@
          $page_1 = 0;
      }else{
          //ako vrijednost page nije prazno ili 1 onda u tu varijablu dodaj ovu jednačinu vrjednost iz varijable $page pomnoži sa 5 i onda oduzmi 5 na taj način na svakoj sledećoj strani dobijamo nove postove
-         $page_1 = ($page * 5 ) - 5;
+         $page_1 = ($page * $per_page ) - $per_page;
      }
 
 
@@ -48,10 +54,10 @@
      $count = mysqli_num_rows($post_count_send);
       
      //Ovdje djelimo broj redova sačuvan u varijabli na 5 i to uokvirujemo u php funkciju ceil() koja vraća cijeli broj tzv intiger jer bez tog cijelog broja neće nam raditi pagiancija. Dakle kada takav broj sačuvamo u varijabli tu varijablu upotrebljavamo na dnu stranice u for loop pomoću koje postavljamo linkove za paginaciju
-      $count = ceil($count / 5); 
+      $count = ceil($count / $per_page); 
 
      //Izaberi sve iz post tabele
-     $query = "SELECT * FROM posts ORDER BY post_id DESC LIMIT $page_1, 5";
+     $query = "SELECT * FROM posts ORDER BY post_id DESC LIMIT $page_1, $per_page";
       //uspostava konekcije sa bazom i prosljeđivanje queriya
      $select_all_posts = mysqli_query($connection, $query);
 
@@ -125,7 +131,14 @@
       <?php
       //Foor loop za pagianciju dakle ovdje lop ide sve dok je varijabla $i manja ili jednaka broju iz varijable $count tj broju redova baze podatak koja je podjeljena na određeni broj , nakon toga vršimo prikaz tačnog broj tj varijable $i i u href tag dodajemo GET atribut na koga ćemo vezati funkcionalsnost tako da kada se klikne na određeni broj da nas salje konkretnu stranicu.
       for($i = 1; $i <= $count; $i++){
-         echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+        //Provjeravamo da li je varijabla $i jednaka varijabli $page to znači da se nalazimo na tom broju stranice onda dodaj klasu u page kako bi se pokaza aktivni link
+        if($i == $page){
+            
+            echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+        }else{
+            echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+        }
+        
       }
       
       

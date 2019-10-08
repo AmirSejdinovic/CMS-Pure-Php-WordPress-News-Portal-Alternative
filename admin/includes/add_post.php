@@ -2,7 +2,7 @@
   if(isset($_POST['create_post'])){
 
      $post_title = $_POST['title'];
-     $post_author = $_POST['author'];
+     $post_user = $_POST['post_user'];
      $post_category_id = $_POST['post_category_id'];
 
      $post_status = $_POST['post_status'];
@@ -20,8 +20,8 @@
      move_uploaded_file($post_image_temp, "../images/$post_image");
 
      //Query za dodavanje posta u bazu podataka
-     $query ="INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
-     $query .= "VALUES ({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}' , '{$post_contnet}', '{$post_date}', {$post_comment_count}, '{$post_status}')";
+     $query ="INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
+     $query .= "VALUES ({$post_category_id}, '{$post_title}', '{$post_user}', now(), '{$post_image}' , '{$post_contnet}', '{$post_date}', {$post_comment_count}, '{$post_status}')";
 
      //Prosljeđivanje querya sa konekcijom
      $add_post_query_send = mysqli_query($connection, $query);
@@ -48,6 +48,7 @@
 </div>
 
 <div class="form-group">
+<label for="categories">Categories</label>
   <select name="post_category_id" id="post_category">
    <?php
    
@@ -75,9 +76,38 @@
 </div>
 
 <div class="form-group">
+<label for="users">Users</label>
+  <select name="post_user" id="post_category">
+   <?php
+   
+   $query = "SELECT * FROM users";
+   $select_users_by_id = mysqli_query($connection, $query);
+
+   //comfirm($select_categories_by_id);
+
+   while($row = mysqli_fetch_assoc($select_users_by_id)){
+         $user_id = $row['user_id'];
+         $username = $row['username'];
+
+         echo "<option value='{$username}'>$username</option>";
+
+
+   }
+   
+   ?>
+  
+  
+  </select>
+
+  <!--<label for="post_category">Post Category Id</label>
+  <input type="text" class="form-control" name="post_category_id">-->
+</div>
+
+
+<!--<div class="form-group">
   <label for="title">Post Author</label>
   <input type="text" class="form-control" name="author">
-</div>
+</div>-->
 
 
 

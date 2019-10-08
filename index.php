@@ -25,7 +25,7 @@
      <?php
 
      //postavljamo broj postova u varijablu kako bi na lak način mogli da mijenjamo i kako bi mogli lako da uradimo funkcionalnost iz admin panela da određujemo koliko članaka želimo da prikažemo prije paginacije. Također ovu varijablu postavljamo na mjesto statičnih brojeva o limitu članak dakle umjesto našeg broja 5 
-      $per_page = 2;
+      $per_page = 5;
       //provjeravamo da li je postavljen get request sa parametrom page, ako je postavlje tj ako je kliknut onda napravi varijablu $page i u nju dodaj parametar tog gea
      if(isset($_GET['page'])){
 

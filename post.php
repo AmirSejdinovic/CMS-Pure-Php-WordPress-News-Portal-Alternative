@@ -116,10 +116,10 @@
                         die("QUERY FAILED" . mysqli_error($connection));
                     }
                     //ažuriraj tabelu post_comment_count tako da svaki put kada se desi komentar dodas 1
-                    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                    /*$query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
                     $query .="WHERE post_id = $current_post_id";
 
-                    $update_comment_count = mysqli_query($connection, $query);
+                    $update_comment_count = mysqli_query($connection, $query);*/
                         
                     }else{
                         //ako su polja prazna echo skriptu sa javascript kodom i izvrši funkciju alert

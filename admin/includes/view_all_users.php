@@ -73,8 +73,19 @@
                       <?php
                          //ako je postavjen get delte onda uradi ovo
                        if(isset($_GET['delete'])){
+                         
+                        //Uvođenje sigurnosti tj provjeramo ako je sesija postavljena na user role onda omogući brisanje
+                        if(isset($_SESSION['role'])){
+
+
+                          //Te ako je user role admin onda mu omogući brisanje usera a ako je bilo koje druga rola onda onemogući
+                          if($_SESSION['role'] == 'admin'){
+
+                         
+
+                        
                          //sačuvaj vrijednost ključa delete u varijabli
-                          $the_user_id = $_GET['delete'];
+                          $the_user_id = mysqli_real_escape_string($connection,$_GET['delete']);
 
                           //query za brisanje komentara
                        $query ="DELETE FROM users WHERE user_id = {$the_user_id}";
@@ -85,6 +96,10 @@
                        comfirm($delte_query_user);
                          //refresh da bi promjene bile isntant
                        header("Location: users.php");
+
+                          }
+
+                        }
 
                        }
 

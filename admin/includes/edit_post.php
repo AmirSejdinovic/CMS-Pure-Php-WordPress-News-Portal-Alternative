@@ -31,15 +31,15 @@ if(isset($_GET['p_id'])){
 
  if(isset($_POST['update_post'])){
     
-        $update_title = $_POST['post_title'];
-        $update_cat_id = $_POST['post_category_id'];
-        $update_post_author = $_POST['post_author'];
-        $update_post_title = $_POST['post_title'];
-        $update_post_status = $_POST['post_status'];
+        $update_title = escape($_POST['post_title']);
+        $update_cat_id = escape($_POST['post_category_id']);
+        $update_post_author = escape($_POST['post_author']);
+        $update_post_title = escape($_POST['post_title']);
+        $update_post_status = escape($_POST['post_status']);
         $update_image = $_FILES['post_image']['name'];
         $update_image_temp = $_FILES['post_image']['tmp_name'];
-        $update_post_content =$_POST['post_content'];
-        $update_post_tags = $_POST['post_tags'];
+        $update_post_content = escape($_POST['post_content']);
+        $update_post_tags = escape($_POST['post_tags']);
 
 
         move_uploaded_file($update_image_temp, "../images/$update_image");

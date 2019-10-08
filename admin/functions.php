@@ -1,4 +1,11 @@
 <?php
+//Kreiranje funkcije pomoću koje ćemo na lak način da vršimo filitranje unosa u bazu podataka tako da se kroz inpute ne mogu unijeti SQL naredbe 
+function escape($string){
+
+  global $connection;
+
+  return mysqli_real_escape_string($connection, trim($string));
+}
 
 function users_online(){
 

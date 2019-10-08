@@ -216,7 +216,7 @@ if(isset($_POST['checkBoxArray'])){
                          //ako je postavjen get delte onda uradi ovo
                        if(isset($_GET['delete'])){
                          //sačuvaj vrijednost ključa delete u varijabli
-                          $the_post_id = $_GET['delete'];
+                          $the_post_id = escape($_GET['delete']);
 
                           //query za brisanje posta
                        $query ="DELETE FROM posts WHERE post_id = {$the_post_id}";
@@ -232,7 +232,7 @@ if(isset($_POST['checkBoxArray'])){
 
                        //resetovanje broja pregeleda
                        if(isset($_GET['reset'])){
-                         $the_id = $_GET['reset'];
+                         $the_id = escape($_GET['reset']);
 
                          $query = "UPDATE posts SET post_views_count = 0 WHERE post_id =". mysqli_real_escape_string($connection, $_GET['reset']) . " ";
                          $reset_query = mysqli_query($connection, $query);

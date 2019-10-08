@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_GET['edit_user'])){
-  $current_user_id = $_GET['edit_user'];
+  $current_user_id = escape($_GET['edit_user']);
 
   $query = "SELECT * FROM users WHERE user_id = $current_user_id ";
   $edit_user_query = mysqli_query($connection, $query);
@@ -23,19 +23,19 @@ if(isset($_GET['edit_user'])){
   if(isset($_POST['edit_user'])){
 
            
-     $user_firstname = $_POST['user_firstname'];
-     $user_lastname = $_POST['user_lastname'];
-     $user_role = $_POST['user_role'];
+     $user_firstname = escape($_POST['user_firstname']);
+     $user_lastname = escape($_POST['user_lastname']);
+     $user_role = escape($_POST['user_role']);
 
-     $username = $_POST['username'];
+     $username = escape($_POST['username']);
 
      
      //$post_image = $_FILES['image']['name'];
      //postavlja sliku u tmp fajl
      //$post_image_temp = $_FILES['image']['tmp_name'];
 
-     $user_email = $_POST['user_email'];
-     $user_password = $_POST['user_password'];
+     $user_email = escape($_POST['user_email']);
+     $user_password = escape($_POST['user_password']);
      //$post_date = date('d-m-y');
      //$post_comment_count = 0;
      $user_image = "sp.jpg";//default value zahtjeva 

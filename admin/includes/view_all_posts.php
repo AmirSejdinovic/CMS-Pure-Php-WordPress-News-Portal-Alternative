@@ -1,5 +1,6 @@
 <?php
-
+//uključivanje modula delete_modal.php
+include('delete_modal.php');
 if(isset($_POST['checkBoxArray'])){
   //prolazi koroz checkboxove sa name checkBoxArray (koje smo predhodno postavili kao arayy u samom name) i za svaki chekirani box koji se nalazi u array postavlja varjalbu $checkBoxValue i čuva sve njegove paramtere u toj varijabli
   foreach($_POST['checkBoxArray'] as $postValueId){
@@ -193,8 +194,10 @@ if(isset($_POST['checkBoxArray'])){
                              echo "<td>{$post_date }</td>";
                              echo "<td><a href='../post.php?p_id={$post_id}'>View post</a></td>";
                              echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-                             echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
+                             echo "<td><a rel='{$post_id}' href='javascript:void(0) ' class='delete_link'>Delete</a></td>";
+                             //echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
                              echo "<td><a href='posts.php?reset={$post_id}'>{$post_views}</a></td>";
+
                              
                            echo "</tr>";
                            
@@ -241,3 +244,25 @@ if(isset($_POST['checkBoxArray'])){
                          header("Location: posts.php");
                        }
                        ?>
+
+                       <script>
+
+                       //jQueryiem taregetiramo delete link tu klasu
+                         $(document).ready(function(){
+                            //kod za targetiranje 
+                          $(".delete_link").on('click', function(){
+
+                            //u varijabli storamo valu od rel atributa a tu smo gor stavili varaijblu php koja ima valu id
+                            var id = $(this).attr('rel');
+                            //storanje u varjalbi get requesta i concatinate id varaijble tako da dobijemo funkciju brisanja
+                            var delete_url = "posts.php?delete="+ id  + " ";
+                            
+                            //Targetiranje klase iz modala te doavanje atributu href value iz varijable delete_url
+                            $(".modal_delete_link").attr("href", delete_url);
+
+                            //Otvaranje modala
+                            $("#myModal").modal('show');
+                          });
+
+                         });
+                       </script>

@@ -46,6 +46,10 @@
                     </li>
 
                     <li>
+                        <a href="contact.php">Contact us</a>
+                    </li>
+
+                    <li>
                         <a href="registration.php">Registration</a>
                     </li>
                  

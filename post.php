@@ -30,11 +30,23 @@
           if(!$view_query){
               die("QUERY FAILED: " . mysqli_error($connection));
           }
+
+          if(isset($_SESSION['role']) && isset($_SESSION['role']) == 'admin'){
+            $query = "SELECT * FROM posts WHERE post_id = $current_post_id ";
+          }else{
+            $query = "SELECT * FROM posts WHERE post_id = $current_post_id AND post_status = 'published' ";
+          }
        
      //Izaberi sve iz post tabele
-     $query = "SELECT * FROM posts WHERE post_id = $current_post_id ";
+     //$query = "SELECT * FROM posts WHERE post_id = $current_post_id ";
       //uspostava konekcije sa bazom i prosljeđivanje queriya
      $select_all_posts = mysqli_query($connection, $query);
+
+     if(mysqli_num_rows($select_all_posts) < 1){
+          echo "<h1 class='text-center'>No posts available</h1>";
+     }else{
+
+     
 
 
      //whille loop koja prolazi kroz bazu i čupa sve što se u njoj nalazi po zadanim putanjama dakle preka principu array 
@@ -55,8 +67,8 @@
 
 
 <h1 class="page-header">
-    Page Heading
-    <small>Secondary Text</small>
+    Post
+    
 </h1>
 
 <!-- First Blog Post -->
@@ -81,14 +93,7 @@
 
 //nastavak whille loop
      }
-     }else{
-         //Ako nema post id redirektuj
-         header("Location: index.php");
-     
     
-    
-    
-    }//kraj whille loop
    ?>
 
 
@@ -106,6 +111,8 @@
                     $comment_content = $_POST['comment_content'];
                      //provjera ako polja nisu prazna onda uradi query ispod i dodaj komentar u bazu podtaka
                     if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content)){
+                    
+                        
                         $query ="INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content,comment_status, comment_date)";
                     $query .="VALUES($current_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
 
@@ -200,6 +207,14 @@
 
                      <?php
                  }
+                } }else{
+                    //Ako nema post id redirektuj
+                    header("Location: index.php");
+                
+               
+               
+               
+               }//kraj whille loop
                 ?>
                 
                 

@@ -45,13 +45,22 @@
          $page_1 = ($page * $per_page ) - $per_page;
      }
 
+     if(isset($_SESSION['role']) && isset($_SESSION['role']) == 'admin'){
+        $posts_query_count = "SELECT * FROM posts";
+      }else{
+        $posts_query_count = "SELECT * FROM posts WHERE post_status = 'published'";
+      }
 
      //Query za selektovanje svih postova pomoću koje ćemo odrediti koliko tačno ima redova u bazi tj postova. Ova informacija pomoći će nam prilikom izrade pagination funkcije
-     $posts_query_count = "SELECT * FROM posts";
+     //$posts_query_count = "SELECT * FROM posts WHERE post_status = 'published'";
      //Šaljemo query u bazu podataka
      $post_count_send = mysqli_query($connection, $posts_query_count); 
      //mysqli funkcijom mysqli_num_rows utvrđujemo tačan broj redova u bazi tj tačan broj postova
      $count = mysqli_num_rows($post_count_send);
+
+     if($count < 1){
+         echo "<h1 class='text-center'>No posts available</h1>";
+     }else{
       
      //Ovdje djelimo broj redova sačuvan u varijabli na 5 i to uokvirujemo u php funkciju ceil() koja vraća cijeli broj tzv intiger jer bez tog cijelog broja neće nam raditi pagiancija. Dakle kada takav broj sačuvamo u varijabli tu varijablu upotrebljavamo na dnu stranice u for loop pomoću koje postavljamo linkove za paginaciju
       $count = ceil($count / $per_page); 
@@ -77,7 +86,7 @@
          $post_content = substr($row['post_content'],0,150);//čupanje post_contene rowa iz rabele, pravljenje putem fije substr excerpta od 0 do 150 karaktera
           $post_status = $row['post_status'];
 
-          if($post_status == 'published'){
+        
 
 
 
@@ -114,8 +123,8 @@
 
 
 <?php
-          }
-//nastavak whille loop
+     } 
+
 
      }//kraj whille loop
    ?>

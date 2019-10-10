@@ -127,5 +127,18 @@ function deleteCategories(){
    }
 }
 
+function recordCount($table){
+  global $connection;
+
+  //Query za selektovanje svi redova u tabeli posts
+  $query = "SELECT * FROM ".$table;
+  //šaljemo query u bazu
+  $post_number_query = mysqli_query($connection,$query);
+  $result = mysqli_num_rows($post_number_query);
+
+  comfirm($result);
+
+  return $result;
+}
 
 ?>

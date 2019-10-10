@@ -49,20 +49,8 @@
                     </div>
                     <div class="col-xs-9 text-right">
 
-                    <?php 
-                    //Query za selektovanje svi redova u tabeli posts
-                     $query = "SELECT * FROM posts";
-                     //šaljemo query u bazu
-                     $post_number_query = mysqli_query($connection,$query);
-                      //Provjera da li ima grešaka u queryu
-                     if(!$post_number_query){
-                         die("Query failed" . mysqli_error($connection));
-                     }
-                      //mysqli_num_rows funkcija koja broji broj redova u tabeli i taj broj redova čuvamo u varijabli i kasnije isti prikazujemo na front endu
-                     $post_counts = mysqli_num_rows($post_number_query);
                     
-                    ?>
-                  <div class='huge'><?php echo $post_counts; ?></div>
+                  <div class='huge'><?php echo $post_counts = recordCount('posts'); ?></div>
                         <div>Posts</div>
                     </div>
                 </div>
@@ -84,19 +72,8 @@
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <?php 
-                        //Selektovanje redova iz tabele comments
-                        $query = "SELECT * FROM comments";
-                        //šaljemo query
-                        $count_comments_query = mysqli_query($connection, $query);
-                        //provjera querya
-                        if(!$count_comments_query){
-                            die("Query failed" . mysqli_error($connection));
-                        }
-                        //brojanje redova u tabeli putem mysqli_num_rows funkcije
-                        $comment_count = mysqli_num_rows($count_comments_query);
-                        ?>
-                     <div class='huge'><?php echo $comment_count; ?></div>
+                        
+                     <div class='huge'><?php echo $comment_count = recordCount('comments'); ?></div>
                       <div>Comments</div>
                     </div>
                 </div>
@@ -118,20 +95,8 @@
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <?php
-                        //Selektovanje svih redova u tabeli users
-                        $query = "SELECT * FROM users";
-                        //šaljemo query
-                        $count_users_query = mysqli_query($connection, $query);
-                        //provjera konekcije
-                        if(!$count_comments_query){
-                            die("Query error" . mysqli_error($connection));
-                        }
-                        //brojimo redove u tabeli users 
-                        $count_of_users = mysqli_num_rows($count_users_query);
-                        
-                        ?>
-                    <div class='huge'><?php echo $count_of_users; ?></div>
+                      
+                    <div class='huge'><?php echo $count_of_users = recordCount('users'); ?></div>
                         <div> Users</div>
                     </div>
                 </div>
@@ -153,19 +118,8 @@
                         <i class="fa fa-list fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <?php
-                        
-                        $query = "SELECT * FROM categories";
-                        $count_categories_query = mysqli_query($connection, $query);
-
-                        if(!$count_categories_query){
-                            die("Query failed" . mysqli_error($connection));
-                        }
-
-                        $count_of_categories = mysqli_num_rows($count_categories_query);
-                        
-                        ?>
-                        <div class='huge'><?php echo $count_of_categories; ?></div>
+                      
+                        <div class='huge'><?php echo $count_of_categories = recordCount('categories'); ?></div>
                          <div>Categories</div>
                     </div>
                 </div>

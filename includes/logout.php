@@ -1,4 +1,5 @@
 
+<?php ob_start();?>
 <!--Uključi sesiju -->
 <?php session_start(); ?>
 

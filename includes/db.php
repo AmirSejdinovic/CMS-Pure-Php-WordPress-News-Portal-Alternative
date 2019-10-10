@@ -1,4 +1,5 @@
 <?php
+ob_start();
 //Osnovni podaci od baze podataka koji su store u array
 $db['db_host'] = "localhost";
 $db['db_user'] = 'root';

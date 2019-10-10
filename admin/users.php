@@ -1,8 +1,20 @@
 
 <?php include 'includes/header.php'; ?>
+
+<?php
+
+  //provjera putem funcije iz functions.php da li je user admin, ako nije admin onda ga redirektuj na index.php. Putem $_SESSION['username'] storamo taj username u varijalbu koja se prosljeđuje u functions php i tamo se vrši obrada te varijable i na osnovu toga procesuiramo ovaj zahtjev
+  if(!is_admin($_SESSION['username'])){
+      header("Location: index.php");
+  }
+
+?>
 <body>
 
     <div id="wrapper">
+
+
+
 
 <?php include 'includes/nav.php'; ?>
 

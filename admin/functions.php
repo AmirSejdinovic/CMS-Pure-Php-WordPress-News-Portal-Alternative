@@ -157,5 +157,22 @@ function checkUserRole($table,$column,$role){
    $select_all_subscibers = mysqli_query($connection, $query);
    return mysqli_num_rows($select_all_subscibers);
 }
+//Function za procesuitanje usera na osnovu koje dopuštamo ulazak u određenu stranicu ili ne
+function is_admin($username = ''){
+   global $connection;
+
+   $query = "SELECT user_role FROM users WHERE username =  '$username'";
+   $result = mysqli_query($connection, $query);
+
+   comfirm($result);
+
+   $row = mysqli_fetch_assoc($result);
+
+   if($row['user_role'] == 'admin'){
+     return true;
+   }else{
+     return false;
+   }
+}
 
 ?>

@@ -45,7 +45,7 @@
                      
                         $category_class = 'active';
 
-                    }else if($pageName == $registratoin)//ako smo na registracijskoj stranici onda uradi ovo{
+                    }else if($pageName == $registratoin){//ako smo na registracijskoj stranici onda uradi ovo{
                         $registration_class  = 'active';
                     }
 

@@ -22,7 +22,20 @@
 
 <!-- Login -->
 <div class="well">
-    <h4>Login</h4>
+<?php
+  //skraćena verzija ifa i tu provjeravamo ako postoji rola usera onda prikaži ispod
+ if(isset($_SESSION['role'])):
+    
+?>
+<h4>Logged in as <?php echo $_SESSION['username']; ?></h4>
+<a href="includes/logout.php" class="btn btn-primary">Logout</a>
+
+
+<?php 
+//ako ne postoji rola usera onda prikažu login formu
+else: ?>
+
+<h4>Login</h4>
     <form action="includes/login.php" method="post">
     <div class="form-group">
         <input type="text" name="username" class="form-control" placehoder="Enter username">
@@ -36,6 +49,10 @@
     </div>
     </form><!--search form end-->
     <!-- /.input-group -->
+
+
+<?php endif; ?>
+    
 </div>
 
 

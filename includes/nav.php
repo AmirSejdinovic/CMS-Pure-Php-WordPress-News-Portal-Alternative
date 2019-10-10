@@ -33,8 +33,24 @@
 
                     $cat_title = $row['cat_title'];
                     $cat_id = $row['cat_id'];
+                     //pravimo dvije varijable prazne koje ćemo kasnije kroz if statement puniti na osnovu ispunjenja uslova
+                    $category_class = '';
+                    $registration_class = '';
+                     //u ovoj varijabli storamo trenutu stranicu putem fije basename($_SERVER['PHP_SELF']) ovaj kod nam vraća url trenutne web stranice
+                    $pageName = basename($_SERVER['PHP_SELF']);
+                    $registratoin = 'registration.php';
 
-                    echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
+                    //if uslov ako je kategorije i id pozitivni onda uradi ovo
+                    if(isset($_GET['category']) && isset($_GET['category']) == $cat_id){
+                     
+                        $category_class = 'active';
+
+                    }else if($pageName == $registratoin)//ako smo na registracijskoj stranici onda uradi ovo{
+                        $registration_class  = 'active';
+                    }
+
+                    echo "<li class='$category_class'><a  href='category.php?category=$cat_id'>{$cat_title}</a></li>";
+
 
                 }
 
@@ -49,7 +65,7 @@
                         <a href="contact.php">Contact us</a>
                     </li>
 
-                    <li>
+                    <li class="<?php echo $registration_class;?>">
                         <a href="registration.php">Registration</a>
                     </li>
                  

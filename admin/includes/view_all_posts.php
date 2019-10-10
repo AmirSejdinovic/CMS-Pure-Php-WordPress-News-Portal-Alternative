@@ -45,14 +45,16 @@ if(isset($_POST['checkBoxArray'])){
         $post_tags = $row['post_tags'];
         $post_content = $row['post_content'];
         $post_comment_count = $row['post_comment_count'];
+        $post_user = $row['post_user'];
         
 
     }
     //query za kloniranje posta 
-    $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags,post_status, 	post_comment_count, post_views_count) ";
-    $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_author}', now() , '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}','{$post_comment_count}', 0 ) ";
+    $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags,post_status, 	post_comment_count, post_views_count, post_user) ";
+    $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_author}', now() , '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}','{$post_comment_count}', 0, '{$post_user}' ) ";
     
     $copy_query = mysqli_query($connection, $query);
+
     if(!$copy_query){
       die("Query Failed: " . mysqli_error($connection));
     }

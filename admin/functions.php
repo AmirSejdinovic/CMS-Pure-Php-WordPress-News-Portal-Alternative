@@ -126,8 +126,9 @@ function deleteCategories(){
 
    }
 }
-
+//pravimo funkciju u kojoj generušemo kod za selektovanje iz tabela i prikaz u adminu broja članaka komentara usera U ovoj funkciji pravimo varijablu $table koju ćemo kasnije u kodu admina puniti sa nazivom tabele iz koje generisemo rezultat
 function recordCount($table){
+  
   global $connection;
 
   //Query za selektovanje svi redova u tabeli posts

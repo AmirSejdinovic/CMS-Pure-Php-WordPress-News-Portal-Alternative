@@ -110,13 +110,21 @@ if(isset($_POST['checkBoxArray'])){
 
                           <?php
                           //query za selektovanje svih stavki u tabeli post dakle svih postova
-                          $query ="SELECT * FROM posts ORDER BY post_id DESC ";
+                          //$query ="SELECT * FROM posts ORDER BY post_id DESC ";
                           //uspostava konekcije i prosljeđivanje querya
+
+
+                          //JOINING QUERY ovdje spajamo dva querya u jedan tako što prvo pišemo naziv tabele onda naziv rowa i na karaju povezujemo sa LEFT JOIN
+                          $query = "SELECT posts.post_id, posts.post_author, posts.post_user, posts.post_title,posts.post_category_id,posts.post_status,posts.post_image,posts.post_tags,posts.post_comment_count,posts.post_date,posts.post_views_count, ";
+                          $query .= "categories.cat_id, categories.cat_title  ";
+                          $query .= "FROM posts";
+                          $query .= " LEFT JOIN categories ON posts.post_category_id = categories.cat_id ORDER BY posts.post_id DESC ";
+
                           $post_display_query = mysqli_query($connection, $query);
 
                           //Testiranje konekcije 
                           if(!$post_display_query){
-                            die('FAILED'. mysqli_erorr($connection));
+                            die('FAILED'. mysqli_error($connection));
                           }
 
                           //While loop koja čupa sve iz baze iz tabele posts i pretvaranje pdataka u varjable
@@ -133,6 +141,8 @@ if(isset($_POST['checkBoxArray'])){
                            $post_comment_count = $row['post_comment_count'];
                            $post_date = $row['post_date'];
                            $post_views = $row['post_views_count'];
+                           $cat_id = $row['cat_id'];
+                           $cat_title = $row['cat_title'];
 
 
 
@@ -161,16 +171,16 @@ if(isset($_POST['checkBoxArray'])){
 
                              echo "<td>{$post_title}</td>";
                              
-                          $query ="SELECT * FROM categories WHERE cat_id = {$post_category_id}";
+                          /*$query ="SELECT * FROM categories WHERE cat_id = {$post_category_id}";
                              $select_categories_id = mysqli_query($connection,$query);
-
+                                 
                              while($row = mysqli_fetch_assoc($select_categories_id)){
 
                               $cat_id = $row['cat_id'];
                               $cat_title = $row['cat_title'];
-
+                               */
                               echo "<td>{$cat_title}</td>";
-                             }
+                             //}
 
                              
 

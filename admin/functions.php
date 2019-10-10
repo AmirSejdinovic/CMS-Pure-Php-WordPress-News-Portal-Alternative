@@ -141,5 +141,21 @@ function recordCount($table){
 
   return $result;
 }
+//kreiranje funkcija za prikaz statussa i broja tabela 
+function checkStatus($table,$column,$status){
+  global $connection;
+  $query = "SELECT * FROM $table WHERE $column = '$status' ";
+  $result = mysqli_query($connection, $query);
+  return mysqli_num_rows($result);
+}
+
+function checkUserRole($table,$column,$role){
+  global $connection;
+
+   $query = "SELECT * FROM $table WHERE $column = '$role' ";
+
+   $select_all_subscibers = mysqli_query($connection, $query);
+   return mysqli_num_rows($select_all_subscibers);
+}
 
 ?>

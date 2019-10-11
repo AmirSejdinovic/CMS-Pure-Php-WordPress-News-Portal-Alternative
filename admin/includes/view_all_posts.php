@@ -204,11 +204,28 @@ if(isset($_POST['checkBoxArray'])){
 
 
                              echo "<td>{$post_date }</td>";
-                             echo "<td><a href='../post.php?p_id={$post_id}'>View post</a></td>";
-                             echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-                             echo "<td><a rel='{$post_id}' href='javascript:void(0) ' class='delete_link'>Delete</a></td>";
+                             echo "<td><a class='btn btn-primary' href='../post.php?p_id={$post_id}'>View post</a></td>";
+                             echo "<td><a class='btn btn-primary' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+                               
+                              ?>
+
+                              <form method="post">
+
+                              <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+
+                              <?php 
+
+                              echo "<td><input class='btn btn-danger' type='submit' name='delete' value='Delete'></td>"
+
+                              ?>
+                              </form>
+
+                             <?php
+                             //echo "<td><a rel='{$post_id}' href='javascript:void(0) ' class='delete_link'>Delete</a></td>";
+
+                               
                              //echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
-                             echo "<td><a href='posts.php?reset={$post_id}'>{$post_views}</a></td>";
+                             echo "<td><a  href='posts.php?reset={$post_id}'>{$post_views}</a></td>";
 
                              
                            echo "</tr>";
@@ -229,9 +246,9 @@ if(isset($_POST['checkBoxArray'])){
 
                       <?php
                          //ako je postavjen get delte onda uradi ovo
-                       if(isset($_GET['delete'])){
+                       if(isset($_POST['delete'])){
                          //sačuvaj vrijednost ključa delete u varijabli
-                          $the_post_id = escape($_GET['delete']);
+                          $the_post_id = escape($_POST['post_id']);
 
                           //query za brisanje posta
                        $query ="DELETE FROM posts WHERE post_id = {$the_post_id}";

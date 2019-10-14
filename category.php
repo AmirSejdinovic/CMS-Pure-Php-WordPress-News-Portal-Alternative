@@ -2,6 +2,7 @@
 
    //Inkluzija modula header iz foldera includes 
    include 'includes/header.php';
+   include 'admin/functions.php';
    //Inkluzija konekcije sa fajlom koji hendla bazu podataka
    include 'includes/db.php';
 ?>
@@ -24,41 +25,57 @@
           
          $cat_id_current = $_GET['category'];
 
-     
-    if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'){
+     //Ovdje koristimo funkciju koju smo definisali u functions.php i koja nam vraća da li je admin ili nije
+    if(is_admin($_SESSION['username'])){
 
-        $query = "SELECT * FROM posts WHERE 	post_category_id = $cat_id_current ";
+        //Umjesto stare query sada koristimo mysqli funkciju mysqli_prepare() u koju prosjeđujemo dva parametra konekciju i query samo što umjesto unosa dinamički stavljamo upitnik i iste ćemo popuniiti kroz varijable. Kod nas je to id posta
+        $stm1 = mysqli_prepare($connection, "SELECT post_id, post_title, post_author, post_date, post_image, post_content  FROM posts WHERE 	post_category_id = ?");
+
+
+
 
     }else{
-        $query = "SELECT * FROM posts WHERE 	post_category_id = $cat_id_current AND post_status = 'published' ";
-    }
-     //Izaberi sve iz post tabele
-     //$query = "SELECT * FROM posts WHERE 	post_category_id = $cat_id_current AND post_status = 'published' ";
-      //uspostava konekcije sa bazom i prosljeđivanje queriya
-     $select_all_posts = mysqli_query($connection, $query);
+        //Umjesto stare query prepare statement za prikaz postova samo onih koji imaju post status sa draft
+        $stm2 = mysqli_prepare($connection, "SELECT post_id, post_title, post_author, post_date, post_image, post_content  FROM posts WHERE 	post_category_id = ? AND post_status = ? ");
 
-     if(mysqli_num_rows($select_all_posts) < 1){
+      //storamo uslov od post statusa
+        $published = 'published';
+    }
+
+    //provejravamo ako je postavljena prva preper statemen onda uradi ovo
+    if(isset($stm1)){
+        //mysqli funckija koja spaja preper statement i dinamički sadržaj za koga smo ostavili placehodler u statementu a to je ?. Ova fija ima tri parametra  prvi uslov je statement, drugi je tip podataka koji prosjedjujemo kod nas je intiger tj broj i zato stavljamo i i onda varijablia koja nosi taj sadrzaj
+      mysqli_stmt_bind_param($stm1, "i", $cat_id_current);
+      //izvrši statement 
+      mysqli_start_execute($stm1);
+     //ova fija spaja statement i ostale rezultate tj polja iz baze podataka
+      mysqli_start_bind_result($stm1, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content );
+       //pravimo varijablu koju popunjavamo podacima iz gore querya
+      $stmt = $stm1;
+
+    }else{
+        //spajanje, ovdje imamo dva uslva sa dvije vrste podataka tj sa intigerom i stringom i onda postavljamo dvije varijable sa tim unosim
+        mysqli_stmt_bind_param($stm2, 'is', $cat_id_current, $published);
+        //izvršenja
+        mysqli_stmt_execute($stm2);
+         //spoji rezultat
+         mysqli_stmt_bind_result($stm2,  $post_id, $post_title, $post_author, $post_date, $post_image, $post_content);
+        //pravimo varijablu i popunjavamo podacima iz gore navedenog querya
+        $stmt = $stm2;
+    }
+
+     if(mysqli_stmt_num_rows($stmt) === 0){
          echo "<h1 class='text-center'>No posts available</h1>";
-     }else{
+     }
 
      
 
 
-     //whille loop koja prolazi kroz bazu i čupa sve što se u njoj nalazi po zadanim putanjama dakle preka principu array 
+    //nova while looop i uslov prilagođeni prepare statements, za ovu vrstu llop ne treba nam da idemo i da hvatamo svaki red iz baze ponaosob nego smo te redove već ranije gore postavili kao varijable
 
-     //mysqli_fetch_assoc je funkcija koja nam daje asocijativnu array dakle sa ključevima po nazivima polja iz tabele koju smo gore selektovali
+     while( mysqli_stmt_fetch($stmt)):
 
-     while($row = mysqli_fetch_assoc($select_all_posts)){
-
-         //čupanje id iz rowa
-         $post_id = $row['post_id'];
-         $post_title = $row['post_title'];//čupanje post_title rowa
-         $post_author = $row['post_author'];//čupanje post_author rowa iz tablee
-         $post_date = $row['post_date'];//čupanje post_date rowa iz tabele
-         $post_image = $row['post_image'];//čupanje post_image rowa iz tabele
-         $post_content = substr($row['post_content'],0,150);//čupanje post_contene rowa iz rabele
-
-         //prekid while loop
+         
 
          ?>
 
@@ -91,9 +108,10 @@
 
 <?php
 
+     endwhile;
+
 //nastavak whille loop
-}
-     } }else{
+     }else{
          header("Localtion: index.php");
      }
    ?>

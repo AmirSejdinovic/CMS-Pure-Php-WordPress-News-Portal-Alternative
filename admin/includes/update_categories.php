@@ -31,14 +31,17 @@
                            if(isset($_POST['update_category'])){
                              //hvatanje cat tile iz inputa gore
                              $edit_cat_title = $_POST['cat_title'];
-                            //query za update kategorije 
-                           $query = "UPDATE categories SET cat_title = '{$edit_cat_title}' WHERE cat_id = {$cat_id} ";
-                             //slanje querya
-                           $edit_send_query = mysqli_query($connection, $query);
-                            //provjera da li ima grešaka prilikom konekcije na mysql bazu podataka
-                           if(!$edit_send_query){
+                            //prepare statement update 
+                           $stmt = mysqli_prepare($connection,"UPDATE categories SET cat_title = ? WHERE cat_id = ? ");
+                           //bind params
+                           mysqli_stmt_bind_param($stmt, 'si', $edit_cat_title, $cat_id );
+                           //execute param
+                           mysqli_stmt_execute($stmt);
+                           if(!$stmt){
                              die ("Failed" . mysqli_erorr($connection));
                            }
+
+                           redirect("categories.php");
                            }
 
                            ?>

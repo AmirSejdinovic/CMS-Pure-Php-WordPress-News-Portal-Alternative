@@ -35,12 +35,15 @@
                            $stmt = mysqli_prepare($connection,"UPDATE categories SET cat_title = ? WHERE cat_id = ? ");
                            //bind params
                            mysqli_stmt_bind_param($stmt, 'si', $edit_cat_title, $cat_id );
+
+                         
                            //execute param
                            mysqli_stmt_execute($stmt);
                            if(!$stmt){
                              die ("Failed" . mysqli_erorr($connection));
                            }
-
+                           //zatvaranje konekcije
+                           mysqli_stmt_close($stmt);
                            redirect("categories.php");
                            }
 

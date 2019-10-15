@@ -97,6 +97,8 @@ if(isset($_POST['submit'])){
 
    //Ovom funkcijom mysqli_stmt_execute() vršimo egzekuciju querya
    mysqli_stmt_execute($stmt);
+   //zatvaranje konekcije sa bazom podataka
+   mysqli_stmt_close($stmt);
    
 
 

@@ -47,9 +47,9 @@
         //mysqli funckija koja spaja preper statement i dinamički sadržaj za koga smo ostavili placehodler u statementu a to je ?. Ova fija ima tri parametra  prvi uslov je statement, drugi je tip podataka koji prosjedjujemo kod nas je intiger tj broj i zato stavljamo i i onda varijablia koja nosi taj sadrzaj
       mysqli_stmt_bind_param($stm1, "i", $cat_id_current);
       //izvrši statement 
-      mysqli_start_execute($stm1);
+      mysqli_stmt_execute($stm1);
      //ova fija spaja statement i ostale rezultate tj polja iz baze podataka
-      mysqli_start_bind_result($stm1, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content );
+     mysqli_stmt_bind_result($stm1, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content );
        //pravimo varijablu koju popunjavamo podacima iz gore querya
       $stmt = $stm1;
 
@@ -74,6 +74,7 @@
     //nova while looop i uslov prilagođeni prepare statements, za ovu vrstu llop ne treba nam da idemo i da hvatamo svaki red iz baze ponaosob nego smo te redove već ranije gore postavili kao varijable
 
      while( mysqli_stmt_fetch($stmt)):
+
 
          
 
@@ -109,6 +110,8 @@
 <?php
 
      endwhile;
+
+      mysqli_stmt_close($stmt);
 
 //nastavak whille loop
      }else{

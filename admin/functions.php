@@ -87,16 +87,21 @@ if(isset($_POST['submit'])){
    echo "This field shoudl not be empty";
 
   }else{
-      //query za insert unosa u bazu podataka
-   $query = "INSERT INTO categories(cat_title) ";
-   $query .= "VALUE('{$cat_title}') ";
 
- 
-   //prosljeđivanje queryija u bazu
-   $create_category_query = mysqli_query($connection, $query);
+
+      //mYSQLI perepare statement za insertovanje u bazu, ovdje isto koristimo mysqli_prepare() funkciju u koju unosimo dva parametra i to kokenciju i query, na mjesto gdje treba da ubacimo dinamički podatak postavljamo upitnik i tu onda u funkciji mysqli_stmt_bind_param() ubacujemo query i ostale podatke
+   $stmt= mysqli_prepare($connection, "INSERT INTO categories(cat_title) VALUES(?)");
+
+   //Funkcija mysqli_stmt_bind_param() koristi tri parametra i to prvi je parametar query gore napravljeni, drugi je parametar koji je to tip podataka kod nas je string i zbog toga pisemo "s" i nakraju je varijabla koja nosi te podatke
+   mysqli_stmt_bind_param($stmt, 's', $cat_title);
+
+   //Ovom funkcijom mysqli_stmt_execute() vršimo egzekuciju querya
+   mysqli_stmt_execute($stmt);
+   
+
 
    //provjera konekcije  
-   if(!$create_category_query){
+   if(!$stmt){
      die("FAILED" . mysqli_error($connection));
    }
       
@@ -309,4 +314,5 @@ if(password_verify($password, $db_password)){
 }
 
 }
+
 ?>

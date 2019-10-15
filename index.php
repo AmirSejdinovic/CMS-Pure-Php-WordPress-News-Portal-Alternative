@@ -102,7 +102,7 @@
 
 <!-- First Blog Post -->
 <h2>
-    <a href="post.php?p_id=<?php //postavljanje getera sa post id
+    <a href="post/<?php //postavljanje getera sa post id
     echo $post_id; ?>"><?php echo $post_title; //display title ?></a>
 </h2>
 <p class="lead">

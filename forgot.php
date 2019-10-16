@@ -42,21 +42,21 @@ require './classes/config.php';
 
         
           //Server settings
-       
-          //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+       try {
+          $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
           $mail->isSMTP();                                            // Send using SMTP
           $mail->Host       = Config::SMTP_HOST;          
           $mail->SMTPAuth   = true;                          
           $mail->Username   = Config::SMTP_USER;              
           $mail->Password   = Config::SMTP_PASSWORD;          
           $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; $mail->Port       = Config::SMTP_PORT;  
-          $mail ->CharSet = 'UTF-8'; 
+          
           $mail->isHTML(true);
 
 
           
           $mail->setFrom('amir@goo.com', 'Amir Sejdinovic');
-          $mail->addAddress($email, 'Joe User');
+          $mail->addAddress('{$email}', 'Joe User');
 
           $mail->Subject = 'Here is the subject';
           $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
@@ -69,7 +69,9 @@ require './classes/config.php';
            
 
         
-         
+       }catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
 
         }else{
           echo mysqli_error($connection);

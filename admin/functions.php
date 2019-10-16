@@ -1,8 +1,40 @@
 <?php
 //Funcija za redirekciju. U ovoj funkicji nalazi se argument sa varijablom $location i ta varijabla će se puniti prilikom poziva funckije te će izvršiti redirekciju tamo gdje označimo u toj varjabli
 function redirect($location){
-  return header("Location:" . $location);
+   header("Location:" . $location);
+   exit;
 }
+//Funkcija ako je postavljen neki metod slanja POST ili GET
+function ifItIsMehod($method=null){
+  //Ako je server rquest metod neki iz varijable onda vrati true
+  if($_SERVER['REQUEST_METHOD'] == stroupper($method)){
+    return true;
+  }
+  //ako uslov nije ispunjen onda vrati false
+  return false;
+}
+//Funkcija ako je user logovan
+function isLoggedIn(){
+
+  //Ako je sesija sa parametrom 'role' onda vrati true
+  if(isset($_SESSION['role'])){
+    return true;
+
+
+  }
+  //ako nije ispunjen uslov onda vrati false
+  return false;
+}
+
+//Funkcija ako je user logovan onda ga redirektuj, ovdje postavljamo argument sa varijablom koja je null
+function checkIfUserIsLoggedInAndRedirect
+($redircetLocation=null){
+  //ako je funkcija isLoggedIn true onda pozivi drugu funkciju redirekti i kao parametar postavi varijablu koja se puni dinamički
+  if(isLoggedIn()){
+    redirect($redircetLocation);
+  }
+}
+
 //Kreiranje funkcije pomoću koje ćemo na lak način da vršimo filitranje unosa u bazu podataka tako da se kroz inpute ne mogu unijeti SQL naredbe 
 function escape($string){
 

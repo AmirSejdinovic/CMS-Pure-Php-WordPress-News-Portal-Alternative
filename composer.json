@@ -1,0 +1,13 @@
+{
+    "name": "comp/novi-cms",
+    "authors": [
+        {
+            "name": "Amir Sejdinovic",
+            "email": "amir24V@yahoo.com"
+        }
+    ],
+    
+    "require": {
+        "phpmailer/phpmailer": "^6.1"
+    }
+}

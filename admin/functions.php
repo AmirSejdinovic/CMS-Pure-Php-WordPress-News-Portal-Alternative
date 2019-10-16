@@ -7,7 +7,7 @@ function redirect($location){
 //Funkcija ako je postavljen neki metod slanja POST ili GET
 function ifItIsMehod($method=null){
   //Ako je server rquest metod neki iz varijable onda vrati true
-  if($_SERVER['REQUEST_METHOD'] == stroupper($method)){
+  if($_SERVER['REQUEST_METHOD'] == strtoupper ($method)){
     return true;
   }
   //ako uslov nije ispunjen onda vrati false
@@ -344,7 +344,7 @@ if(password_verify($password, $db_password)){
 
     redirect("/NoviCMS/admin/index.php");
 }else{
-  redirect("/NoviCMS/index.php");
+  return false;
 }
 
 }

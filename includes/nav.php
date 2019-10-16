@@ -1,6 +1,7 @@
 
 <!--Uključi sesiju -->
 <?php session_start(); ?>
+<?php include 'admin/functions.php'; ?>
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -57,9 +58,25 @@
                  
                     ?>
 
-                   <li>
-                        <a href="/NoviCms/admin">Admin</a>
+                   <?php if(isLoggedIn()): ?>
+                    <li>
+                   <a href="/NoviCms/admin">Admin</a>
                     </li>
+                    <li>
+                    <a href="/NoviCms/includes/logout.php">Logout</a>
+                    </li>
+
+                  <?php else: ?>
+
+                   <li>
+                        <a href="/NoviCms/login.php">Login</a>
+                    </li>
+
+                     <?php endif; ?>
+                   <li>
+                        
+
+                   
 
                     <li>
                         <a href="/NoviCms/contact">Contact us</a>

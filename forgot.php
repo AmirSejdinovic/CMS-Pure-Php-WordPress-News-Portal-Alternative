@@ -14,7 +14,7 @@ require './classes/config.php';
 ?>
 
 <?php 
-  if(!ifItIsMehod('get') && !isset($_GET['forgot'])){
+  if(!isset($_GET['forgot'])){
     redirect('index');
   }
 
@@ -40,9 +40,10 @@ require './classes/config.php';
         //Konfiguracija PHP Mailera
         $mail = new PHPMailer();
 
-        
+        echo $email;
           //Server settings
-       try {
+       
+         
           $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
           $mail->isSMTP();                                            // Send using SMTP
           $mail->Host       = Config::SMTP_HOST;          
@@ -50,7 +51,7 @@ require './classes/config.php';
           $mail->Username   = Config::SMTP_USER;              
           $mail->Password   = Config::SMTP_PASSWORD;          
           $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; $mail->Port       = Config::SMTP_PORT;  
-          
+          $mail->CharSet = 'UTF-8';
           $mail->isHTML(true);
 
 
@@ -59,19 +60,37 @@ require './classes/config.php';
           $mail->addAddress('{$email}', 'Joe User');
 
           $mail->Subject = 'Here is the subject';
-          $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-          $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+          $mail->Body    = '<p>Please click to reset your password
+          
+          <a href="http://localhost/NoviCms/reset.php?email= '.$email.'&token='.$token. ' ">http://localhost/NoviCms/reset.php?email= '.$email.'&token='.$token. '</a>
+          
+          
+          </p>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          ';
+        
 
-          $mail->send();
-          echo 'Message has been sent';
+          if($mail->send()){
+            echo 'Message has been sent';       
+          }else{
+            echo "Email is not sent";
+          };
+          
           
 
            
-
+      
         
-       }catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
+    
 
         }else{
           echo mysqli_error($connection);
@@ -79,6 +98,8 @@ require './classes/config.php';
         
 
 
+      }else{
+        echo "enter your email";
       }
 
     }

@@ -1,4 +1,12 @@
 <?php
+
+function ImgPlacehoder($image=null){
+  if(!$image){
+    return '23.png';
+  }else{
+    return $image;
+  }
+}
 //Funcija za redirekciju. U ovoj funkicji nalazi se argument sa varijablom $location i ta varijabla će se puniti prilikom poziva funckije te će izvršiti redirekciju tamo gdje označimo u toj varjabli
 function redirect($location){
    header("Location:" . $location);

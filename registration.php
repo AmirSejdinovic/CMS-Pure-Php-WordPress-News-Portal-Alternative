@@ -1,6 +1,32 @@
 <?php  include "includes/db.php"; ?>
  <?php  include "includes/header.php"; ?>
- <?php include 'admin/functions.php'; ?>
+ <?php 
+
+ //ukljucujemo pusher
+ require __DIR__ . '/vendor/autoload.php';
+  
+//uključivanje php env paketa
+$dotenv = Dotenv\Dotenv::create(__DIR__);
+$dotenv->load(); 
+
+//u varijablu $pusher storamo novi objekat pusher u koji ubacujemo id, secret, key i cluster
+  $options = array(
+    'cluster' => 'eu',
+    'useTLS' => true
+  );
+  $pusher = new Pusher\Pusher(
+    getenv('APP_KEY'),
+    getenv('APP_SECRET'),
+    getenv('APP_ID'),
+    $options
+  );
+
+  
+  
+
+ 
+ ?>
+
 
   <?php
     //Ovo je novi metod provjere da li je došlo do sumbita a to radimo sa globanom varijablom $_SERVER['REQUEST_MEHTOD'] koji je jednak metodu iz fomre kod nas je to POST
@@ -38,6 +64,7 @@
         $error['email']='Email cannot be empty'; 
     }
    //Validacija ako email već postoji. Funkcija email_exits je već definisana u functinons.php
+
     if(email_exists($email)){
         $error['email']='Email already exists, <a href="index.php">Please Login</a>';    
     }
@@ -61,8 +88,16 @@
        
         //Register user funkcija sa parametrima koji su varijable sa unosima inputa te koje se prenose u argumente funkcije i onda na osnovu toga funkcija procesuira i vraća određeni rezulate
         register_user($username, $email, $pasword);
+
+        $data['message'] = $username;
+
+        //kada registrujemo usera ovdje onda pozivamo pusher sa trigeremom i 3 parametra prvi je kanal, drugi je naziv a treći su podaci kod nas je to username dakle želimo da nas obavjesti o novom useru sa tim usrenameom
+        $pusher->trigger('my-channel', 'my-event', $data);
+        //$pusher->triger('notifications', 'new_user', );
         //Funckija login_user sa parametraima varijablama sa inputima koje prenosi u argumente funkcije i onda radi kod koji je definisan u funkciji. Ovdje konkretno se radi o logiranju usera koji već postoji u bazi
         login_user($username, $pasword);
+
+
     }
 
    

@@ -1,5 +1,7 @@
 
 <?php include 'includes/header.php'; ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha256-ENFZrbVzylNbgnXx0n3I1g//2WeO47XxoPe0vkp3NC8=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
 
 <body>
 
@@ -201,3 +203,26 @@
         </div>
         <!-- /#page-wrapper -->
 <?php include 'includes/footer.php'; ?>
+<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+  
+  Pusher.logToConsole = true;
+
+var pusher = new Pusher('16a276e832c30cc4ef02', {
+  cluster: 'eu',
+  forceTLS: true
+});
+var channel = pusher.subscribe('my-channel');
+
+    channel.bind('my-event', function(data) {
+        var message = data.message;
+        tosttr.success(`${message} just register`);
+
+    });
+    
+
+  });
+</script>
+

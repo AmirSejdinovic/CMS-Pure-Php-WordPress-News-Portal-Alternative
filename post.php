@@ -84,7 +84,16 @@
 <hr>
 <p><?php echo $post_content; ?></p>
 
+<div class="row">
+ <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"> Like</span></a></p>
+</div>
 
+<div class="row">
+ <p class="pull-right">Like: 10</p>
+</div>
+
+<div class="clearfix">
+</div>
 <hr>
 
 
@@ -229,3 +238,14 @@
 include 'includes/footer.php';
 
 ?>
+
+<script>
+
+//jquery da se izvrši nakon load dokumenta
+$(document).ready(function(){
+    //biramo emelemt sa klasom like i onda dodajemo funkciju za clikc event
+    $('.like').click(function(){
+        console.log("It works");
+    });
+});
+</script>

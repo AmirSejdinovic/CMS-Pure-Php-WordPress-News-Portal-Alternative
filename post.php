@@ -7,7 +7,34 @@
 ?>
 
 <?php include 'includes/nav.php';?>
+<?php 
 
+if(isset($_POST['liked'])) {
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+
+  //1 = Fetching posts
+  $searchPost  =  "SELECT * from posts WHERE post_id = $post_id ";
+  $postResult = mysqli_query($connection, $searchPost);
+  $post = mysqli_fetch_array($postResult);
+  $likes = $post['likes'];
+
+  if(mysqli_num_rows($postResult) >= 1){
+      echo $post['post_id'];
+  }
+  // 2 = UPDATE POST WIHT LIKES
+  mysqli_query($connection, "UPDATE posts SET likes=$likes+1 WHERE post_id=$post_id");
+  
+
+
+  //3 = CREATE LIKE FOR POSTS
+
+  mysqli_query($connection, "INSERT INTO likes(user_id, post_id) VALUES($user_id, $post_id) ");
+  exit();
+    
+}
+
+?>
     <!-- Page Content -->
     <div class="container">
 
@@ -243,9 +270,22 @@ include 'includes/footer.php';
 
 //jquery da se izvrši nakon load dokumenta
 $(document).ready(function(){
+
+    var post_id = <?php echo $current_post_id; ?>;
+
+    var user_id = 1;
     //biramo emelemt sa klasom like i onda dodajemo funkciju za clikc event
     $('.like').click(function(){
-        console.log("It works");
+        $.ajax({
+            url: "/NoviCMS/post.php?p_id=<?php echo $current_post_id; ?>",
+            type: 'post',
+            data: {
+                'liked': 1,
+                'post_id': post_id,
+                'user_id': user_id
+
+            }
+        })
     });
 });
 </script>

@@ -34,6 +34,31 @@ if(isset($_POST['liked'])) {
     
 }
 
+
+if(isset($_POST['unliked'])) {
+
+    //
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+
+  //1 = Fetching likes
+  $searchPost  =  "SELECT * from posts WHERE post_id = $post_id ";
+  $postResult = mysqli_query($connection, $searchPost);
+  $post = mysqli_fetch_array($postResult);
+  $likes = $post['likes'];
+
+ 
+  // 2 =delete
+  mysqli_query($connection, "DELETE FROM  likes WHERE post_id=$post_id AND user_id=$user_id");
+  
+
+
+  //3 = CREATE LIKE FOR POSTS
+
+  mysqli_query($connection, "UPDATE posts SET likes=$likes-1 WHERE post_id=$post_id");
+  exit();
+    
+
 ?>
     <!-- Page Content -->
     <div class="container">
@@ -113,6 +138,10 @@ if(isset($_POST['liked'])) {
 
 <div class="row">
  <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"> Like</span></a></p>
+</div>
+
+<div class="row">
+ <p class="pull-right"><a class="unlike" href="#"><span class="glyphicon glyphicon-thumbs-down"> Unlike</span></a></p>
 </div>
 
 <div class="row">
@@ -281,6 +310,19 @@ $(document).ready(function(){
             type: 'post',
             data: {
                 'liked': 1,
+                'post_id': post_id,
+                'user_id': user_id
+
+            }
+        })
+    });
+
+    $('.unlike').click(function(){
+        $.ajax({
+            url: "/NoviCMS/post.php?p_id=<?php echo $current_post_id; ?>",
+            type: 'post',
+            data: {
+                'unliked': 1,
                 'post_id': post_id,
                 'user_id': user_id
 

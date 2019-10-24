@@ -46,7 +46,21 @@ function loggedInUserId(){
   if(isLoggedIn()){
     //ovjde pozivamo funkciju za prosljeđivanje querya i tu kao parametar pišemo query koji će se prenijetu u funkciju kao argument i onda će funkcija da izvrš itaj kod
      $result = query("SELECT * FROM users WHERE username ='". $_SESSION['username'] . "'");
+     comfirm($result);
+     $user = mysqli_fetch_array($result);
+
+     if(mysqli_num_rows($result) >= 1){
+       return $user['id'];
+     }
   }
+  return false;
+}
+//funkcija za koliko je usera like određeni post
+function userLikedThisPost($post_id = ''){
+$result = query("SELECT * FROM likes WHERE user_id=".loggedInUserId(). "AND post_id={$post_id}");
+//terniari if statement
+return mysqli_num_rows($result) >= 1 ? true : false;
+
 }
 
 //Funkcija ako je user logovan onda ga redirektuj, ovdje postavljamo argument sa varijablom koja je null

@@ -49,7 +49,7 @@ if(isset($_POST['unliked'])) {
 
  
   // 2 =delete
-  mysqli_query($connection, "DELETE FROM  likes WHERE post_id=$post_id AND user_id=$user_id");
+  mysqli_query($connection, "DELETE FROM  likes WHERE post_id=$post_id AND user_id=$user_id  ");
   
 
 
@@ -137,12 +137,12 @@ if(isset($_POST['unliked'])) {
 <p><?php echo $post_content; ?></p>
 
 <div class="row">
- <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"> Like</span></a></p>
+ <p class="pull-right"><a class="<?php echo userLikedThisPost($post_id)? 'unlike' : 'like'; ?>" href="#"><span class="glyphicon glyphicon-thumbs-up"> Like</span></a></p>
 </div>
 
-<div class="row">
+<!--<div class="row">
  <p class="pull-right"><a class="unlike" href="#"><span class="glyphicon glyphicon-thumbs-down"> Unlike</span></a></p>
-</div>
+</div>-->
 
 <div class="row">
  <p class="pull-right">Like: 10</p>

@@ -12,6 +12,11 @@ function redirect($location){
    header("Location:" . $location);
    exit;
 }
+//funkcija za prosljeđivanje querya u bazu, ovdje pravimo variajblu $quey koja je argument i koja će se puniti pri pozivu funkcija sa parametrom a to će biti query nakon toga pravimo globalnu varijablu $connection i onda pišemo mysqli funkciju za prosljeđivanje querya u bazu a to je mysqli_query i postavljamo $connection kao parametar i $query koja će biti unesena pri pozivu funkcije
+function query($query){
+  global $connection;
+  return mysqli_query($connection, $query);
+}
 //Funkcija ako je postavljen neki metod slanja POST ili GET
 function ifItIsMehod($method=null){
   //Ako je server rquest metod neki iz varijable onda vrati true
@@ -21,6 +26,8 @@ function ifItIsMehod($method=null){
   //ako uslov nije ispunjen onda vrati false
   return false;
 }
+
+
 //Funkcija ako je user logovan
 function isLoggedIn(){
 
@@ -32,6 +39,14 @@ function isLoggedIn(){
   }
   //ako nije ispunjen uslov onda vrati false
   return false;
+}
+
+//Funkcija za dobijanje user ID. Ovdje u if statementu kao uslov navodimo funkciju isLoggedIn() koju smo ranije definisali, što znači ako ima podatak o useru dakle $_SESSION['role'] onda će izvštiti kod
+function loggedInUserId(){
+  if(isLoggedIn()){
+    //ovjde pozivamo funkciju za prosljeđivanje querya i tu kao parametar pišemo query koji će se prenijetu u funkciju kao argument i onda će funkcija da izvrš itaj kod
+     $result = query("SELECT * FROM users WHERE username ='". $_SESSION['username'] . "'");
+  }
 }
 
 //Funkcija ako je user logovan onda ga redirektuj, ovdje postavljamo argument sa varijablom koja je null
